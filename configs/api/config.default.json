@@ -1,0 +1,161 @@
+{
+  "host": "localhost",
+  "port": 8085,
+  "protocol": "http",
+  "paths": {
+    "tmp": "/tmp",
+    "files": "/files"
+  },
+  "urls": {
+    "publicSmartlinkUrl": "https://{subDomain}.argoflow.io/{title}.sl?sl={smartlinkId}"
+  },
+  "oldApi": {
+    "host": "http://api:3180",
+    "auth": "Basic dXNlcjp0ZXN0",
+    "entities": {
+      "asset": "asset",
+      "document": "content",
+      "smartlink": "document",
+      "folder": "folder",
+      "user": "member",
+      "organization": "organization",
+      "subscription": "subscription",
+      "util": "util"
+    },
+    "notifySmartlinkAfterAssetUpdate": true
+  },
+  "storageUsed": "OldApiStorage",
+  "storages": {
+    "OldApiStorage": {
+      "folders": {
+        "asset": "aura",
+        "document": "pdf",
+        "documentPageImage": "page",
+        "userAvatar": "member"
+      },
+      "paths": {
+        "publicAssetUrl": "http://api:3180/aura/media/{assetId}/{name}",
+        "publicDocumentUrl": "http://conv:3380/{fileName}",
+        "publicDocumentPageImageUrl": "http://api:3180/page/{fileName}",
+        "publicDocumentPagePreviewImageUrl": "http://api:3180/page/{fileName}",
+        "publicSmartlinkCustomPreviewImageUrl": "http://api:3180/page/{fileName}",
+        "privateSmartlinkCustomPreviewImageUrl": "/page/{fileName}",
+        "publicUserAvatarUrl": "http://api:3180/files/member/{fileName}"
+      }
+    },
+    "local": {
+      "rootFolder": "./storage/media",
+      "paths": {
+        "publicAssetUrl": "storage/media/asset/{assetId}_{fileName}",
+        "publicDocumentUrl": "storage/media/pdf/{fileName}",
+        "publicDocumentPageImageUrl": "storage/media/page/{fileName}",
+        "publicDocumentPagePreviewImageUrl": "storage/media/page/{fileName}",
+        "publicSmartlinkCustomPreviewImageUrl": "storage/media/page/{fileName}",
+        "privateSmartlinkCustomPreviewImageUrl": "storage/media/page/{fileName}",
+        "publicUserAvatarUrl": "storage/media/member/{fileName}"
+      }
+    },
+    "s3": {
+      "filesUrl": "<to be set in final config>",
+      "bucket": "<to be set in final config>",
+      "rootFolder": "storage",
+      "accessKeyId": "<to be set in final config>",
+      "secretAccessKey": "<to be set in final config>",
+      "folders": {
+        "asset": "asset",
+        "document": "document",
+        "documentPageImage": "document_page_image",
+        "userAvatar": "user_avatar"
+      },
+      "paths": {
+        "publicAssetUrl": "{storage.filesUrl}/{storage.folders.asset}/{fileName}",
+        "publicDocumentUrl": "{storage.filesUrl}/{storage.folders.document}/{fileName}",
+        "publicDocumentPageImageUrl": "{storage.filesUrl}/{storage.folders.documentPageImage}/{fileName}",
+        "publicDocumentPagePreviewImageUrl": "{storage.filesUrl}/{storage.folders.documentPageImage}/{fileName}",
+        "publicSmartlinkCustomPreviewImageUrl": "{storage.filesUrl}/{storage.folders.documentPageImage}/{fileName}",
+        "privateSmartlinkCustomPreviewImageUrl": "/page/{fileName}",
+        "publicUserAvatarUrl": "{storage.filesUrl}/{storage.folders.userAvatar}/{fileName}"
+      }
+    }
+  },
+  "jwt": {
+    "secret": "<to be set in final config>",
+    "algo": "HS256"
+  },
+  "mongoDB": {
+    "connectionString": "mongodb://host.docker.internal:27017/creator",
+    "parameters": {
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true,
+      "useCreateIndex": true,
+      "useFindAndModify": false
+    }
+  },
+  "redis": {
+    "port": 6379,
+    "host": "localhost",
+    "ipInfoKeyPrefix": "ipinfo::",
+    "googleAuthUserKeyPrefix": "googleAuthUser::"
+  },
+  "ipDB": {
+    "url": "https://api.db-ip.com/v2",
+    "token": "<to be set in final config>"
+  },
+  "shortIo": {
+    "url": "https://api.short.io/links",
+    "secretKey": "<to be set in final config>",
+    "directUrl": "https://backend.short.io/links",
+    "domain": "lk.ar-go.co",
+    "domainId": 99891
+  },
+  "stripe": {
+    "secret": "<to be set in final config>",
+    "webhookSecret": "<to be set in final config>"
+  },
+  "clickhouse": {
+    "host": "localhost",
+    "port": 8123,
+    "database": "wizeflow",
+    "maxResultRows": 1000,
+    "maxResultMb": 10,
+    "maxMemoryUsageForUserMb": 100,
+    "maxExecutionTimeSec": 10
+  },
+  "bear": {
+    "urls": {
+      "deleteMarker": "<bear api url>/2.11/pages/{markerId}?_token={token}",
+      "statusOfMarkers": "<bear api url>/2.11/pages/statuses",
+      "books": "<bear api url>/2.12/books",
+      "pages": "<bear api url>/2.12/pages",
+      "booksLanguages": "<bear api url>/2.12/campaigns_languages",
+      "media": "<bear api url>/{path}",
+      "webar": "<bear api url>/2.12/webar/campaigns"
+    },
+    "clickhouse": {
+      "host": "<to be set in final config>",
+      "port": 8123,
+      "database": "bapi",
+      "maxResultRows": 1000,
+      "maxResultMb": 10,
+      "maxMemoryUsageForUserMb": 100,
+      "maxExecutionTimeSec": 10
+    },
+    "token": "<to be set in final config>"
+  },
+  "googleAuth": {
+    "urlToVerifyToken": "https://oauth2.googleapis.com/tokeninfo?id_token="
+  },
+  "signerUsed": "keeex",
+  "keeex": {
+    "pathToBinary": "/config/keeex/bin/fkeeex-osx",
+    "passphrase": "<to be set in final config>",
+    "config": {
+      "user": "<to be set in final config>",
+      "password": "<to be set in final config>",
+      "passphrase": "<to be set in final config>",
+      "network": "main",
+      "license": "/config/keeex/license.kxjson"
+    },
+    "pathToConfig": "/config/keeex/fkeeex.config"
+  }
+}

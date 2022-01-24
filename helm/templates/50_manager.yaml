@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manager-conf
+  namespace: argoflow
+data:
+  app-config.json: |
+    {
+        "protocol" : "{{ .Values.manager.protocol }}://",
+        "apiUrl" : "{{ .Values.api.host }}",
+        "editorUrl" : "{{ .Values.editor.host }}",
+        "mediaLibUrl" : "medialib.ar-go.co",
+        "shortlinksDisabled": false
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.manager.name }}
+  namespace: argoflow
+spec:
+  replicas: {{ .Values.manager.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.manager.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.manager.name }}
+        cluster: {{ .Values.labels.cluster }}
+      annotations:
+        timestamp: "{{ date "20060102-150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.manager.name }}
+        image: {{ .Values.manager.image.repository }}:{{ .Values.manager.version }}
+        imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/assets/app-config.json
+          subPath: app-config.json
+          readOnly: true
+          name: manager-conf
+      volumes:
+      - name: manager-conf
+        configMap:
+          name: manager-conf
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: manager-service
+  namespace: argoflow
+  annotations:
+    # Add BAPI/WAPI Developers group
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: {{ .Values.manager.name }}

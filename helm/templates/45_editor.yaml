@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.editor.name }}
+  namespace: argoflow
+spec:
+  replicas: {{ .Values.editor.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.editor.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.editor.name }}
+        cluster: {{ .Values.labels.cluster }}
+      annotations:
+        timestamp: "{{ date "20060102-150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.editor.name }}
+        image: {{ .Values.editor.image.repository }}:{{ .Values.editor.version }}
+        imagePullPolicy: {{ .Values.editor.image.pullPolicy }}
+        env:
+        - name: NODE_ENV
+          value: {{ .Values.editor.parameters.nodeEnv }}
+        - name: ALLOWED_DOMAINS_LIST
+          value: "{{ .Values.editor.parameters.allowedDomainsList }}"
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: editor-service
+  namespace: argoflow
+  annotations:
+    # Add BAPI/WAPI Developers group
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 4445
+  selector:
+    name: {{ .Values.editor.name }}

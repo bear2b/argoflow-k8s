@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}
+  namespace: argoflow
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.api.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.api.name }}
+        cluster: {{ .Values.labels.cluster }}
+      annotations:
+        timestamp: "{{ date "20060102-150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.api.name }}
+        image: {{ .Values.api.image.repository }}:{{ .Values.api.version }}
+        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+        # command: ["npm"]
+        # args: []
+        volumeMounts:
+        - name: efs
+          mountPath: {{ .Values.storage.mountPath }}
+        env:
+        - name: NODE_ENV
+          value: {{ .Values.api.parameters.nodeEnv }}
+        - name: AF_API_CONFIG_B64
+          valueFrom:
+            secretKeyRef:
+              name: af-api-secrets
+              key: AF_API_CONFIG_B64
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: efs
+        persistentVolumeClaim:
+          claimName: efs-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: argoflow
+  annotations:
+    # Add BAPI/WAPI Developers group
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: {{ .Values.api.name }}

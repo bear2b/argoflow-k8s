@@ -1,0 +1,15 @@
+# Common values
+
+name: argoflow
+api:
+  name: argoflow-api-v2
+  version: "2.10"
+smartlinkCreator:
+  name: smartlink-creator
+  version: "2.10"
+editor:
+  name: editor
+  version: "2.10"
+manager:
+  name: manager
+  version: "2.10"

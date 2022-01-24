@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.smartlinkCreator.name }}
+  namespace: argoflow
+spec:
+  replicas: {{ .Values.smartlinkCreator.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.smartlinkCreator.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.smartlinkCreator.name }}
+        cluster: {{ .Values.labels.cluster }}
+      annotations:
+        timestamp: "{{ date "20060102-150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.smartlinkCreator.name }}
+        image: {{ .Values.smartlinkCreator.image.repository }}:{{ .Values.smartlinkCreator.version }}
+        imagePullPolicy: {{ .Values.smartlinkCreator.image.pullPolicy }}
+        volumeMounts:
+        - name: efs
+          mountPath: {{ .Values.storage.mountPath }}
+        env:
+        - name: NODE_ENV
+          value: {{ .Values.smartlinkCreator.parameters.nodeEnv }}
+        - name: AF_API_URL
+          value: {{ .Values.smartlinkCreator.parameters.afApiUrl }}
+        - name: AF_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: af-api-secrets
+              key: AF_API_TOKEN
+        - name: AF_TRACK_URL
+          value: {{ .Values.smartlinkCreator.parameters.afTrackUrl }}
+        - name: AF_UI_URL
+          value: {{ .Values.smartlinkCreator.parameters.afUiUrl }}
+        - name: EVENTS_SERVER
+          value: {{ .Values.smartlinkCreator.parameters.eventsServer }}
+        - name: KEEEX_BINARY
+          value: {{ .Values.smartlinkCreator.parameters.keeexBinary }}
+        - name: KEEEX_PASSPHRASE
+          valueFrom:
+            secretKeyRef:
+              name: af-api-secrets
+              key: KEEEX_PASSPHRASE
+        - name: PORT
+          value: "{{ .Values.smartlinkCreator.parameters.httpBindPort }}"
+        - name: SAVE_LAST_GULP_OPERATION_LOG
+          value: "{{ .Values.smartlinkCreator.parameters.saveLastGulpOperationLog }}"
+        - name: SCRIPT_HOST
+          value: {{ .Values.smartlinkCreator.parameters.scriptHost }}
+        - name: SMTP_HOST
+          value: {{ .Values.smartlinkCreator.parameters.smtpHost }}
+        - name: SMTP_PASS
+          valueFrom:
+            secretKeyRef:
+              name: af-api-secrets
+              key: SMTP_PASS
+        - name: SMTP_PORT
+          value: "{{ .Values.smartlinkCreator.parameters.smtpPort }}"
+        - name: SMTP_SECURE
+          value: "{{ .Values.smartlinkCreator.parameters.smtpSecure }}"
+        - name: SMTP_USER
+          value: {{ .Values.smartlinkCreator.parameters.smtpUser }}
+        - name: STORAGE_FOLDER
+          value: {{ .Values.smartlinkCreator.parameters.storageFolder }}
+        - name: BATCH_ROOT_FOLDER
+          value: {{ .Values.smartlinkCreator.parameters.batchRootFolder }}
+        - name: CACHE_FOLDER
+          value: {{ .Values.smartlinkCreator.parameters.cacheFolder }}
+        - name: SMARTLINK_FOLDER
+          value: {{ .Values.smartlinkCreator.parameters.smartlinkFolder }}
+        - name: TOWER_ENV
+          value: {{ .Values.smartlinkCreator.parameters.towerEnv }}
+        - name: AXEPTIO_ENABLED
+          value: "{{ .Values.smartlinkCreator.parameters.showCookiesPopup }}"
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: efs
+        persistentVolumeClaim:
+          claimName: efs-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sl-service
+  namespace: argoflow
+  annotations:
+    # Add BAPI/WAPI Developers group
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    name: {{ .Values.smartlinkCreator.name }}
