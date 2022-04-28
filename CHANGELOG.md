@@ -2,6 +2,108 @@
 
 ---
 
+## [2.13](https://github.com/bear2b/argoflow-k8s/releases/tag/2.13)
+
+### Migration notes
+
+Please follow instructions in [Migrate to 2.13](migration/2.13/Migrate%20to%202.13.md)
+
+### API:
+#### Added
+- WAPI-584: Error of duplication users to BEAR
+- BAPI-1621: NewRelic monitoring
+- WAPI-578: Added Google Tag Manager parameters
+- WAPI-547: Add error code to errors
+- WAPI-382: Keep Batches in database
+- WAPI-532: New parameter config.is_web_ar_enabled in AR project object
+- ISETO-78: Added asset name column to asset stats
+- WAPI-558: Raw stats calls + implementing jobs and queues
+- WAPI-538: Delete documents along with SLs/Projects
+- WAPI-564: Add an ability to get projectId in GET a SL call
+- WAPI-569: Add ability to group stats result by week, month, year (not only day)
+- ISETO-85: Security of Base PDF + SL
+- WAPI-469: Allow image to be upload for Augmented PDF
+#### Fixed
+- WAPI-581: Views by date and Viewing time by date stats appears only on the next day
+- ISETO-83: Error by filtering fields of SL project result
+- WAPI-575: Remove accents from symbols
+#### Changed
+- WAPI-252: Some stats column names were updated
+- WAPI-531: Generate AR project subdomain without timestamp if available
+- WAPI-572: Added header to Base64 content
+
+### Reader / Smartlink Creator:
+#### Added
+- WAPI-382: Keep Batches in database
+- WAPI-564: Added a link to new UI in email templates
+- WAPI-520: Added Swagger
+- WAPI-566: Added an ability to create SL "on fly": without using DB and storage
+#### Fixed
+- ISETO-76: Fix print tracking on Firefox
+- WAPI-559: Separate stats for generated smartlinks by batch
+- WAPI-560: Fix of GA counter in SLs created by batch mode
+#### Changed
+- WAPI-252: Some stats column names were updated
+- WAPI-572: Added header to Base64 favicon content
+
+### Manager:
+#### Added
+- AM-300: reduced tab bar to fit a line + added tag carousel
+- AM-303: added ownership email in project-overview-info
+- AM-331: added ability to search tags from start letter
+- AM-339: add tooltip for input custom splash screen subdomain
+- AM-337: added condition to not show duplicate button for AR project 
+- AM-68: add possibility to pass bapi token to medialib link
+- AM-302: add ability to reset search parameters
+- AM-277: add ability to clear dates in project details diffusion settings
+- AM-298: add Google Tag Manager configuration
+- ISETO-77: Allow to set specific favicon for organization and/or project
+- AM-193 Improved project menu tab bar
+- AM-226: Add ability to download raw project statistics
+- AM-145: Reimplement custom splashscreen for web AR
+- AM-285: implement redirect ability to exact page after login
+- AM-137: Add warning modal when leaving not saved project
+- AM-147: Open tags dropdown by click (after choosing of any tag)
+- AM-35: Add ability to modify avatar
+- AM-256: Display the name of your organization in left bar
+- AM-235: Allow superadmin to connect as specific organization
+#### Fixed
+- AM-331: fixed ui not shows new searched values 
+- AM-309: fixed possibility to not update favicon if it not changed
+- AM-312: reimplemented filter behavior for filter menu to get ability to show picked option
+- AM-306: added tooltip locales for AR icons
+- AM-305: fix invalid date in charts
+- AM-312: fix search projects after reload of page
+- AM-248: moved tabs on statistic page, changed webAR icon
+- AM-297: fixed disabled behavior of Project search: "Filter by" until page fully loaded  
+- AM-258: fixed stats charts view.
+- AM-261: add storage listener to avoid errors if you clear local storage data
+- AM-271: Added selected project type to saved search
+- AM-264: fix size of svg QR code
+- AM-254: fixed getting text search results from word beginning
+- AM-284: fix save organization setting if specific favicon was added
+- ISETO-77: fix a bug which blocked the saving after updating favicon
+- AM-230: fix some text colors and bg color in dark mode (text was not visible)
+- AM-120: Fix some AR settings
+#### Changed
+- AM-317: improved test preview window, increased size, changed style of buttons
+- AM-340: renamed custom url field in webar diffusion settings
+- AM-301: changed ability to search projects from start letter
+- AM-342: move webAR settings into webAR design tab
+- AM-192: now have infinite scroll in projects list page
+- AM-315: fix project default sort option
+- AM-270: rewramp authentication architecture to improve UI reactivity
+- AM-272: Change option management for WebAR
+- AM-203: Keep page number When going back to the project list after clicking on a project
+- AM-266: Update the way we include Google Tag Manager
+
+### Editor:
+#### Added
+- ACM-457: There is no "Key-kolor" block for video assets
+#### Fixed
+#### Changed
+- AE-207: Change "video on texture" behavior
+
 ## [2.12](https://github.com/bear2b/argoflow-k8s/releases/tag/2.12)
 
 ### API:
