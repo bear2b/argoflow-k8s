@@ -19,10 +19,10 @@ clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_by_da
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_by_document"
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_count_by_organization"
 
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_document_id_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_document_id_page_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_organization_id_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_views_by_document_and_user_data"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_document_id_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_document_id_page_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_organization_id_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_views_by_document_and_user_data"
 
 checkIfMutationsAreDone
 clickhouse-client --query="ALTER TABLE wizeflow.tracks ADD COLUMN event Nullable(String) AFTER action"
