@@ -19,10 +19,10 @@ clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_by_da
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_by_document"
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_count_by_organization"
 
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_document_id_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_document_id_page_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_view_by_organization_id_dt"
-clickhouse-client --query="DROP TABLE wizeflow.tracks_views_by_document_and_user_data"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_document_id_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_document_id_page_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_organization_id_dt"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_views_by_document_and_user_data"
 
 checkIfMutationsAreDone
 clickhouse-client --query="ALTER TABLE wizeflow.tracks ADD COLUMN event Nullable(String) AFTER action"
@@ -244,5 +244,11 @@ where fp!='' and visitor!='anonymous' and object='sl' and event='open'
 group by organization_id,toDate(dt)"
 
 clickhouse-client --query="ALTER TABLE wizeflow.tracks ADD COLUMN batch_id Nullable(String) AFTER user_id"
+
+# We should recreate Kafka's views and tables after modification of source table (wizeflow.tracks in this particular case)
+clickhouse-client --query="DROP TABLE wizeflow.__kafka__wizeflow_tracks__mv"
+clickhouse-client --query="DROP TABLE wizeflow.__kafka__wizeflow_tracks"
+clickhouse-client --query="CREATE TABLE wizeflow.__kafka__wizeflow_tracks AS wizeflow.tracks ENGINE = Kafka() SETTINGS kafka_broker_list='kafka-service:19092', kafka_topic_list = 'wizeflow.tracks', kafka_group_name = 'ch.wizeflow.tracks', kafka_format = 'JSONEachRow', kafka_skip_broken_messages = 1"
+clickhouse-client --query="CREATE MATERIALIZED VIEW wizeflow.__kafka__wizeflow_tracks__mv TO wizeflow.tracks AS SELECT * FROM wizeflow.__kafka__wizeflow_tracks"
 
 echo "The migration was completed successfully"
