@@ -2,6 +2,113 @@
 
 ---
 
+## [2.14](https://github.com/bear2b/argoflow-k8s/releases/tag/2.14)
+
+### Migration notes
+
+Please follow instructions in [Migrate to 2.14](migration/2.14/Migrate%20to%202.14.md)
+
+### API:
+#### Added
+- WAPI-657: Add ability to not Inherit limits from the parent organization
+- WAPI-659: Link AF user to BEAR one if it was not linked before after update
+- WAPI-610: Add 'visitor' parameter for stat calls
+- WAPI-634: Let provide ttl in POST /token call
+- WAPI-642: Ability to prevent entity's files deletion
+- WAPI-640: Let Account Manager create Subclients and manage Clients’ and Subclients’ Projects
+- WAPI-633: Create a stats call /top-projects 
+- WAPI-632: Add view property to get projects call
+- WAPI-616: An ability to create subclients for admins
+- WAPI-618: Added an account manager role
+- WAPI-620: Add an ability to get max or min value of user's property
+- WAPI-604: An ability to set strategy for smartlink in POST/PUT/PATCH projects/sl calls
+- WAPI-602: [Interaction Engine] Create a storage to keep JSON schemes for IE objects validation
+- BAPI-1658: An ability to sort projects by a position of filter value occurrence in the name
+- WAPI-593: When deleting a user, add ability to reassign projects to another user
+- WAPI-594: Improve "tracking_email" parameter
+- WAPI-592: Add 'document_file' parameter to project sl PATCH route
+
+#### Fixed
+- WAPI-665: Error when you try to delete PDF organization in the environment where BEAR API is disabled
+- WAPI-649: Cannot PATCH subclient PDF Project as Admin, got error
+- WAPI-656: Wrong limits of the linked BEAR clents fix
+- WAPI-651: Allow to set custom features to sub clients
+- WAPI-637: Quota amount issue (sync with old api)
+- WAPI-631: New owner(user) of private project doesn’t see it in the list of projects
+- ISETO-105: Assets stats page number fix
+- WAPI-601: Project duplication error
+- WAPI-613: Cannot create User on PDF organization
+
+#### Changed
+- ISETO-106: [clicked] property in the response of assets stats endpoint shows amount of click [events] instead of [open] events now
+- WAPI-618: The is_admin parameter is deprecated. We have role_id now
+
+### Reader / Smartlink Creator:
+#### Added
+- WAPI-604: An ability to get strategy from Smartlink's parameters for simple SL creation
+- WAPI-594: Improve "tracking_email" parameter
+
+#### Fixed
+
+#### Changed
+
+### Manager:
+#### Added
+- AM-493: Introduction of "Account manager" user role
+- AM-350: Added new dashboard with widgets & two tabs: AR & PDF
+- AM-351: Implemented reset-password/set-new-password page
+- AM-318: New column 'views' for project tab overview
+- AM-411: Add size checker for project uploading
+- AM-341: Add specific tags in ARGO webAR standard URL for general settings
+- AM-466: Disable "webAR" settings & custom landing page when no project URL is selected for the project
+- AM-471: Add possibility to switch between sub-organization for admin of the parent organization
+- AM-475: Implement multi-organization & sub-organization
+- AM-464: Split projects list in two tabs: AR & PDF
+- AM-318: Add columns "owner" & "views" in projects list
+- AM-354: Implement csv-zip import
+- AM-293: Add possibility to process pdf in background for big files
+- AM-343: Add posibility to share webAR project using "share" modal
+- AM-346: Add possibility to reassign projects when deleting a user
+- AM-358: Add possibility to change underlying document for unpublished projects
+- AM-308: Improve "e-mail notification" settings. Now possible to configure multiple e-mails notifications.
+- AM-394: Add tooltips on project details for "edit/duplicate/delete" buttons.
+- AM-133: Implement "recognition area" selector for AR projects
+- AM-191: Re-implement the ability to send messages to native app like on AR manager v1
+- AM-303: Add "owner" field in project details view
+
+#### Fixed
+
+- AM-524: Fix problem with user creation & organization selector
+- AM-523: Fix error modal that appeared at start
+- AM-519: Fix date handler for Safari
+- AM-517: Cancel loading tasks when switching to another tab to avoid result conflicts
+- AM-397: Improve UI spacings
+- AM-477: Fixed not showing subdomain on ui
+- AM-366: Fixed styles of projects list page
+- AM-413: Fixed bug where we cannot add more than 1 tag in filter
+- AM-452: Fix a bug with snack bar when displaying very long messages
+- AM-310: Unify aspect of all modals
+- AM-396: Fix scroll of left menu bar
+- AM-393: Fix bug allowing to change project name while duplicating project
+- AM-392: Fix bug which blocked the ability to go back after navigating through tabs in project details
+- AM-395: Fix bug with delete/cancel buttons which were still clickable while deleting a project
+
+### Editor:
+#### Added
+- AE-466: Added IE var for env, hide behaviors menu
+- AM-457: Add access to mediaLib when coming from manager V2 which gives bear API token
+- AE-442: Implement actions to control video & audio with Interaction Engine (disabled for now)
+- AE-433: Implement first version of Interaction Engine UI to create behaviors
+#### Fixed
+- AE-462: Fix authentication cookie handler
+- AE-397: Fix minor graphical issues since major update of libraries
+- AE-411: Fix infinite scroll of thumbnail bar
+#### Changed
+- AE-455: Improve scene lighting with envMap
+- AE-406: Do not require API urls parameters anymore, all in configuraitons of the editor
+- Major update to Angular 13 with modern project tools
+- AE-343: Update HTML editor to have colored syntax & indentation
+
 ## [2.13](https://github.com/bear2b/argoflow-k8s/releases/tag/2.13)
 
 ### Migration notes
