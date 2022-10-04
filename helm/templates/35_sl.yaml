@@ -53,6 +53,8 @@ spec:
               key: KEEEX_PASSPHRASE
         - name: PORT
           value: "{{ .Values.smartlinkCreator.parameters.httpBindPort }}"
+        - name: PROTOCOL
+          value: "{{ .Values.smartlinkCreator.parameters.httpBindProtocol }}"
         - name: SAVE_LAST_GULP_OPERATION_LOG
           value: "{{ .Values.smartlinkCreator.parameters.saveLastGulpOperationLog }}"
         - name: SCRIPT_HOST
@@ -82,6 +84,8 @@ spec:
           value: {{ .Values.smartlinkCreator.parameters.towerEnv }}
         - name: AXEPTIO_ENABLED
           value: "{{ .Values.smartlinkCreator.parameters.showCookiesPopup }}"
+        - name: URL_TO_STATS
+          value: "{{ .Values.smartlinkCreator.parameters.urlToStats }}"
       imagePullSecrets:
       - name: regcred
       volumes:
