@@ -2,6 +2,44 @@
 
 ---
 
+## [2.15](https://github.com/bear2b/argoflow-k8s/releases/tag/2.15)
+
+### Migration notes
+
+Please follow instructions in [Migrate to 2.15](migration/2.15/Migrate%20to%202.15.md)
+
+### API:
+#### Added
+
+#### Fixed
+
+#### Changed
+
+
+### Reader / Smartlink Creator:
+#### Added
+
+#### Fixed
+
+#### Changed
+
+
+### Manager:
+#### Added
+
+#### Fixed
+
+#### Changed
+
+
+### Editor:
+#### Added
+
+#### Fixed
+
+#### Changed
+
+
 ## [2.14](https://github.com/bear2b/argoflow-k8s/releases/tag/2.14)
 
 ### Migration notes
