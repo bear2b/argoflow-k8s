@@ -214,7 +214,7 @@ spec:
     #       privileged: true
       containers:
       - name: clickhouse
-        image: yandex/clickhouse-server:19.13
+        image: clickhouse/clickhouse-server:22.9.3
         ports:
         - containerPort: 8123
         - containerPort: 9000

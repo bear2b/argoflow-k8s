@@ -2,6 +2,169 @@
 
 ---
 
+## [2.15](https://github.com/bear2b/argoflow-k8s/releases/tag/2.15)
+
+### Migration notes
+
+Please follow instructions in [Migrate to 2.15](migration/2.15/Migrate%20to%202.15.md)
+
+### API:
+#### Added
+- WAPI-713: Payment notification state parameter in organizations
+- WAPI-701: Do not return stats for deleted projects
+- WAPI-696: Add a new parameter "Embedded PDF" for Organization
+- WAPI-662: Add smartlinks.scripts text field to keep array of dynamic scripts
+- WAPI-702: Smartlink visitor list
+- WAPI-707 Sort tags by popularity
+- WAPI-693: Quota check before pdf processing
+- WAPI-639: callback_url parameter for background mode
+- WAPI-692: Let update project by PUT/PATCH request in the background mode
+- ISETO-113: Password reset ability
+- WAPI-691: Allow filter stats by visitor on Statistics page (global)
+- WAPI-686: Stats without organization_id
+- WAPI-289: Logging
+- PIC-91: Ability to add a link on the image added to PDF
+- WAPI-638: Count only actived SmartLinks in quota consumption
+- PIC-50: An ability to create asset with project_id instead of smartlink_id
+- WAPI-680: Service to add image to PDF
+- WAPI-669: Add new Aura attribute called "showInResponsiveViews"
+
+#### Fixed
+- WAPI-664: Correct error code if jwt token is invalid/expired
+- WAPI-660: Stats by visitor fix
+- PIC-101: Launch QR Code is distorted
+- PIC-95: Inconsistency between SL and markers if underlying document is an image
+- WAPI-682: User consumption value update
+- WAPI-688: Incorrect created date of migrated organizations from BEAR API
+
+#### Changed
+- WAPI-719: Added aliases to CH requests
+
+### Reader / Smartlink Creator:
+#### Added
+- WAPI-654: Smartlink Creation with pre-created templates
+- WAPI-668: AURA in PDF for Batch mode
+- WAPI-670: Implement encrypting in Batch mode
+- WR-233, WR-251: Implement support of pdf files with embedded auras
+- WR-215: Provide download link for file assets when possible
+
+#### Fixed
+
+#### Changed
+- WAPI-711: Smartlink generation without Gulp as default
+- WAPI-696: Added a check if the original strategy is allowed by organization
+- WR-184: Open modal webviews in iframes similar
+
+### Manager:
+#### Added
+- AM-563: add new organization parameter to enable "embedded pdf"
+- AM-566: allow to filter stats by visitor on stats page
+- AM-585: implement background mode for project update
+- AM-586: added bgMode for update project upload
+- AM-578: added “extended tracking” & “community marker” to AR page settings
+- AM-609: added exactMatch sort project parameter
+- AM-591: added duplicate project to project dropdown menu
+- AM-453: Added share thumbnail change for AR projects
+- AM-330: added logic of getting search value from session storage
+- AM-307: Add possibility to filter stats by viewer
+- AM-586: Add "copy url" button in "custom subdomain" field
+- AM-588: Add a warning message about asset positions when replacing underlying document.
+- AM-546: Added new parameter for Organization and Project to encrypt PDF
+- AM-399: added Wemap map of views in project stats page
+- AM-470: implemented splitting locales script
+
+#### Fixed
+- AM-629: fix bug which prevent to delete user
+- AM-626: fix default value for e-mail notification parameter
+- AM-624: fix API call for password reset when no SSO
+- AM-582: added getCsv param to dowloadFullStats call
+- AM-552: remove unnecessary condition in listOfProjects call to make visible only related projects for specific organization
+- AM-607/AM-612/AM-614: Test modal now opens directly on selected page
+- AM-568: Split tags collections depending on the API we reach
+- AM-330: Keep all search settings when I go on project detail & click on back button
+- AM-532: Users & Messages are now updated when switching to another organization
+- AM-542: Fix problem of disabled stats for superadmin & account manager when logged in organization without stats
+- AM-543: Fix responsiveness of "stats disabled" message
+- AM-595: Remove " & ' characters from project name
+- AM-624: add conditional url for reset and set new passwords
+- AM-574: Fix webAR url to return default url if no custom domain is set
+- AM-509: Fix project filtering by tag
+- AM-485: Update password requirements
+- AM-561: Send language to editor
+- AM-567: fix translations
+- AM-506: Adapted "you have been disconnected" popin to error message
+- AM-525: Fixed color of link and input area in dark mode
+- AM-527: removed symbol 'upper arrow' from bear api projects search
+- AM-561: passed lang param for editor link
+
+#### Changed
+- AM-361: implement infinite scroll on organizations, users, messages & project pages
+- AM-538: removeв token from parameter, and added project type in header calls
+- AM-593: impoved pipe number abbreviation to add K, M, B
+- AM-569: Changed title Quota on the dashboard
+- AM-490: made more clean ability to pass parameters into projectList and createProjects api methods
+- AM-399: changed logo of pinpoint and removed burger menu in wemap-map
+
+### Editor:
+#### Added
+- AE-502: fix big size of selection area
+- AE-520: [IE] Add possibility to manage context variables for interaction engine
+- AE-530: [IE] Add possibility to define a set of conditions to trigger a behavior
+- AE-534: [IE] Add possibility to define context variables as persistent
+- AE-535: [IE] Add possiblity to have 1 event + multiple conditions => multiple actions for 1 behavior
+- AE-542: [IE] Add "increment/decrement context variable" action in IE
+- AE-507: Implement algorithm to keep as much as possible the dimension of assets when copying from one page to another (with different dimensions)
+- AE-561: [IE] Add possibility to declare context variable as "global"
+- AE-443: [IE] Add "toggle media" action in interaction engine
+- AE-517: Add possibility to copy the "page id" information in tech infos panel
+- AE-518: Add possibility to validate auras properties by pressing "enter" key
+- AE-429: Ability to set responsiveness for assets (but disabled for now)
+- AE-486: Interaction engine configuration now saved in embedded auras
+- AE-450: Can now copy/paste IE behaviours
+- AE-470: Add possibility to reset IE form
+- AE-476: uncommented needsRendering var
+- AE-457: IE implement ON_CAMERA_DISTANCE events
+- AE-456: implement new event enter/leave behavior for IE
+- AE-465: [IE] added possibility to play an object animation
+- AE-495: Add "technical informations" panel to display "pageId" value
+- AE-421: Add support of embedded Auras in PDF
+
+#### Fixed
+- AE-537: Fix issue with aura visibility
+- AE-552: Fix problem when empty IE configuration for AR projects
+- AE-362: Fix some translations
+- AE-502: Fix bug with clickable area of asset
+- AE-524: Fix bug with "animate" checkbox in interaction engine
+- AE-536: Fix bug with asset anchor size
+- AE-537: Fix bug which make some asset become invisible
+- AE-539: Enable "save" button after editing a behavior
+- AE-560: Fix bug with preferred language
+- AE-518: make asset rotation props change on Enter
+- AE-422: Advanced features for "embedded auras in pdf"
+- AE-512: Fix issues with responsive visibility of auras
+- AE-523: Fix problem with ratio & responsive view
+- AE-529: Fix translation
+- AE-508: fixed layout of asset behaviors if name too long
+- AE-510: Fix bug with duplicated assets
+- AE-499: Fix autoplay for audio assets
+- AE-392: removed unnecessary life cycle method
+- AE-427: fixed thumbnail generation on upload for short video
+- AE-483: Restore saving of empty content
+- AE-474: Improve authentication mecanisms
+- AE-493: fixed unsaved changes for IE at first application load
+
+#### Changed
+- AE-540: Disable asset responsiveness for AR projects
+- AE-541: Show only visible assets in current responsive view in behavior forms
+- AE-545: Assign 1 IE config per page
+- AE-519: Do not update aura size when changing its cover image
+- AE-526: Remove Start/stop 3D animation actions for PDF project
+- AE-509: disabled some ie options for v1
+- AE-516: disable IE for multi-languages projects
+- AE-489: regroup "video" & "audio" IE actions into "media" actions
+- AE-489 - merge video & audio actions into "media" actions in Interaction Engine.
+
+
 ## [2.14](https://github.com/bear2b/argoflow-k8s/releases/tag/2.14)
 
 ### Migration notes

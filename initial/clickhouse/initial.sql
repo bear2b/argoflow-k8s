@@ -88,7 +88,7 @@ SETTINGS index_granularity = 8192;
 
 CREATE TABLE __kafka__wizeflow_actions AS actions ENGINE = Kafka()
 SETTINGS 
-kafka_broker_list='kafka1:19092',
+kafka_broker_list='kafka-service:19092',
 kafka_topic_list = 'wizeflow.actions',
 kafka_group_name = 'ch.wizeflow.actions',
 kafka_format = 'JSONEachRow',
@@ -114,7 +114,7 @@ SETTINGS index_granularity = 8192;
 
 CREATE TABLE __kafka__wizeflow_errors AS errors ENGINE = Kafka()
 SETTINGS 
-kafka_broker_list='kafka1:19092',
+kafka_broker_list='kafka-service:19092',
 kafka_topic_list = 'wizeflow.errors',
 kafka_group_name = 'ch.wizeflow.errors',
 kafka_format = 'JSONEachRow',
@@ -213,3 +213,20 @@ ifNull(visitor,'') visitor
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='page' and event in ('view','open')
 group by smartlink_id, toDate(dt), page, visitor;
+
+
+SET max_partitions_per_insert_block=1000;
+CREATE MATERIALIZED VIEW wizeflow.tracks_view_by__organization_id__user_id__smarlink_id__visitor
+ENGINE = AggregatingMergeTree() 
+PARTITION BY left(ifNull(organization_id,'00'),2) 
+ORDER BY (organization_id, user_id, smartlink_id, visitor)
+POPULATE
+AS 
+select 
+ifNull(organization_id,'0000') organization_id,
+ifNull(user_id,'0000') user_id,
+ifNull(smartlink_id,'0000') smartlink_id,
+ifNull(visitor,'') visitor
+from wizeflow.tracks
+where fp!='' and visitor!='anonymous' and object='sl' and event='open'
+group by organization_id, user_id, smartlink_id, visitor;
