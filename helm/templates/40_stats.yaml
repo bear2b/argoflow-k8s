@@ -147,7 +147,7 @@ spec:
     spec:
       containers:
       - name: kafka-proxy
-        image: argoteam/kafka-proxy:master
+        image: argoteam/kafka-proxy:1.1
         resources:
           requests:
             cpu: 100m
