@@ -86,6 +86,8 @@ spec:
           value: "{{ .Values.smartlinkCreator.parameters.showCookiesPopup }}"
         - name: URL_TO_STATS
           value: "{{ .Values.smartlinkCreator.parameters.urlToStats }}"
+        - name: STORAGE_URL
+          value: "{{ .Values.smartlinkCreator.parameters.storageUrl }}"
       imagePullSecrets:
       - name: regcred
       volumes:

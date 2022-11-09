@@ -34,22 +34,23 @@ kubectl delete secret af-api-secrets -n argoflow
 ```
 - Do `helm upgrade`
 
-2. Change `argoteam/kafka-proxy` version from `master` to `1.1` in `/helm/templates/40_stats.yaml` line 150. 
+2. SL Creator parameter has a new parameter in "values": `storageUrl` (`Values.smartlinkCreator.parameters.storageUrl`). This parameter should contain a public url of the storage server (e.g. `https://k8s-files.argoflow.io`).
+3. Change `argoteam/kafka-proxy` version from `master` to `1.1` in `/helm/templates/40_stats.yaml` line 150. 
 Do `helm upgrade`. Wait 5 minutes and go to next step
-3. To let Argoflow 2.15 work properly, ClickHouse db should be upgraded to the version `22.9.3`.
+4. To let Argoflow 2.15 work properly, ClickHouse db should be upgraded to the version `22.9.3`.
 ClickHouse upgrade can be done by migrating to next major version one by one until the required `22.9.3`.
 Argoflow `2.14` works with ClickHouse `19.3`. So you can upgrade Clickhouse to version `20.8`, then to version `21.3` and finally to the `22.9.3`. To do this you can perform following steps:
-2.1. Change version from `19.3` to `20.8` in `/helm/templates/40_stats.yaml` line 217. Do `helm upgrade`. Wait 5 minutes and check if ClickHouse pod works and statistics displayed in the Manager.
-2.2. Change version from `20.8` to `21.3` in `/helm/templates/40_stats.yaml` line 217. Do `helm upgrade`. Wait 5 minutes and check if ClickHouse pod works and statistics displayed in the Manager.
-2.3. Change version from `yandex/clickhouse-server:21.3` to `clickhouse/clickhouse-server:22.9.3` in `/helm/templates/40_stats.yaml` line 217.
+- 4.1. Change version from `19.3` to `20.8` in `/helm/templates/40_stats.yaml` line 217. Do `helm upgrade`. Wait 5 minutes and check if ClickHouse pod works and statistics displayed in the Manager.
+- 4.2. Change version from `20.8` to `21.3` in `/helm/templates/40_stats.yaml` line 217. Do `helm upgrade`. Wait 5 minutes and check if ClickHouse pod works and statistics displayed in the Manager.
+- 4.3. Change version from `yandex/clickhouse-server:21.3` to `clickhouse/clickhouse-server:22.9.3` in `/helm/templates/40_stats.yaml` line 217.
 Please note that the repository name changed from `yandex` to `clickhouse`.
 Do `helm upgrade`. Wait 5 minutes and check if ClickHouse pod works and statistics displayed in the Manager.
-4. Copy sql scripts from (scripts)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.15/clickhouse] folder to the clickhouse pod:
+5. Copy sql scripts from (scripts)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.15/clickhouse] folder to the clickhouse pod:
 ```bash
 kubectl -it -n argoflow exec pod/<your clickhouse pod name> -- mkdir -p /argoflow
 kubectl cp -n argoflow scripts/. <your clickhouse pod name>:/argoflow/.
 ```
-5. Go to Clickhouse pod and execute all scripts from /argoflow folder **one-by-one**
+6. Go to Clickhouse pod and execute all scripts from /argoflow folder **one-by-one**
 ```bash
 kubectl exec -it -n argoflow <your clickhouse pod name> -- bash
 cd /argoflow
@@ -58,4 +59,4 @@ clickhouse-client --multiquery < 02_errors.sql | tee -a 02_errors_result.txt
 clickhouse-client --multiquery < 03_views.sql | tee -a 03_views_result.txt
 clickhouse-client --multiquery < 04_dictionary_smarltinks.sql | tee -a 04_dictionary_smarltinks_result.txt
 ```
-6. Do `helm upgrade`
+7. Do `helm upgrade`
