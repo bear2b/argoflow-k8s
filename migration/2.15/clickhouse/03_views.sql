@@ -104,7 +104,7 @@ ifNull(email,'') email,
 ifNull(fp,'') fp
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='sl' and event='open'
-group by smartlink_id, visitor, email, fp
+group by smartlink_id, visitor, email, fp;
 
 
 DROP TABLE IF EXISTS wizeflow.tracks_view_by__organization_id__user_id__smarlink_id__visitor;
