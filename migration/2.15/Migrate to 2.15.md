@@ -54,9 +54,9 @@ kubectl cp -n argoflow scripts/. <your clickhouse pod name>:/argoflow/.
 ```bash
 kubectl exec -it -n argoflow <your clickhouse pod name> -- bash
 cd /argoflow
-clickhouse-client --multiquery < 01_actions.sql | tee -a 01_actions_result.txt
-clickhouse-client --multiquery < 02_errors.sql | tee -a 02_errors_result.txt
-clickhouse-client --multiquery < 03_views.sql | tee -a 03_views_result.txt
-clickhouse-client --multiquery < 04_dictionary_smarltinks.sql | tee -a 04_dictionary_smarltinks_result.txt
+clickhouse-client --multiquery < 01_actions.sql 2>&1 | tee -a 01_actions_result.txt
+clickhouse-client --multiquery < 02_errors.sql 2>&1 | tee -a 02_errors_result.txt
+clickhouse-client --multiquery < 03_views.sql 2>&1 | tee -a 03_views_result.txt
+clickhouse-client --multiquery < 04_dictionary_smarltinks.sql 2>&1 | tee -a 04_dictionary_smarltinks_result.txt
 ```
 7. Do `helm upgrade`
