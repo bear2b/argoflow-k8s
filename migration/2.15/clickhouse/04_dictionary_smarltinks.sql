@@ -1,3 +1,7 @@
+DROP DICTIONARY IF EXISTS default.dict_smartlinks;
+
+use wizeflow;
+
 CREATE DICTIONARY dict_smartlinks
 (
     _id String IS_OBJECT_ID,
