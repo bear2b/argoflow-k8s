@@ -10,9 +10,10 @@ data:
         "apiUrl" : "{{ .Values.api.host }}",
         "editorUrl" : "{{ .Values.editor.host }}",
         "mediaLibUrl" : "medialib.ar-go.co",
-        "shortlinksDisabled": false,
+        "shortlinksDisabled": true,
         "arDisabled": true,
         "ssoEnabled": false,
+        "readerTemplateVersion": "1.0"
     }
 
 ---
