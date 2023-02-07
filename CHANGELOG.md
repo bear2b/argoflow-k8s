@@ -47,131 +47,131 @@
 
 ### Manager:
 #### Added
-AM-615: Add possibility to share a specific page of a webAR project
-AM-628 / AM-641: Disable the "publish" button while the marker is being processed
-AM-663: Add link to old AR manager
-AM-581: Create endpoints constants for api calls
-AM-617: Show Alert message of non payment by organisation
-AM-606: Implement background mode for AR projects
-AM-540: Implement infinite scroll on AR pages view
-AM-662: Add possibility to change image preview of a project
-AM-673: add the possibility to open MediaLib in WebAR section
-AM-667: refresh project list after background mode was completed
-AM-692: Allow user to define his own skins for smartlink reader.
-AM-685: implement script to force to update CHANGELOG file before push code.
-AM-671: implement custom order ability for arPages
-AM-674: add tooltip-message while publish/unpublish project
-AM-671: implement custom order ability for arPages
-AM-668: add possibility to import Aura in PDF
-AM-668-2: fix not passed variable to api call
-AM-672: add description for image fields in WebAR section
-AM-653: add possibility to use a project as example project
-AM-728: Enable Medialib for flow organisation that have specific flag
-AM-734: Allow superadmin view and edit public projects right from Examples page
-AM-723-2: Projects page offer a way to see the full project name
+- AM-615: Add possibility to share a specific page of a webAR project
+- AM-628 / AM-641: Disable the "publish" button while the marker is being processed
+- AM-663: Add link to old AR manager
+- AM-581: Create endpoints constants for api calls
+- AM-617: Show Alert message of non payment by organisation
+- AM-606: Implement background mode for AR projects
+- AM-540: Implement infinite scroll on AR pages view
+- AM-662: Add possibility to change image preview of a project
+- AM-673: add the possibility to open MediaLib in WebAR section
+- AM-667: refresh project list after background mode was completed
+- AM-692: Allow user to define his own skins for smartlink reader.
+- AM-685: implement script to force to update CHANGELOG file before push code.
+- AM-671: implement custom order ability for arPages
+- AM-674: add tooltip-message while publish/unpublish project
+- AM-671: implement custom order ability for arPages
+- AM-668: add possibility to import Aura in PDF
+- AM-668-2: fix not passed variable to api call
+- AM-672: add description for image fields in WebAR section
+- AM-653: add possibility to use a project as example project
+- AM-728: Enable Medialib for flow organisation that have specific flag
+- AM-734: Allow superadmin view and edit public projects right from Examples page
+- AM-723-2: Projects page offer a way to see the full project name
 
 #### Fixed
-AM-602: get full info of organization after picking it in org dropdown
-AM-476: fix nasty error when trying to publish an AR project
-AM-596: fix error when set validity days for AR project
-AM-602: fix permission error when switching to another organization
-AM-642: fix error while trying to update the thumbnail
-AM-649: fix error with cover images
-AM-640 / AM-643: refresh web page when AR-page added/deleted
-AM-625: make subdomain to not have uppercase letters in request
-AM-660: fix bug which allow to add tag to a locked project
-AM-647: Fix error in WebAR when the URL already exist
-AM-655: Fix handling of webAR parameters when sharing a page
-AM-661: Fix infinite loading if custom subdomain already used
-AM-676: Ensure that project shortlink is unique
-AM-618: fix cannot search by some tags
-AM-635: fix cannot found visitor issue on stats page
-AM-682: fix cannot change Alert email parameter
-AM-684: fix wrong default language
-AM-651 / AM - 652: fix error appear when user tries to create project with more than 200 pages
-AM-688: fixed stacking upload project notifications
-AM-701: fixed download raw data in project stats page
-AM-670: desactivated link check faq link in webar-design
-AM-704: fixed No AR projects in the list when first connexion
-AM-651: fix errorMessage when user tries to create project with more than 200 pages
-ISETO-123: remove oldManager links for ISETO
-AM-693: fix different tags for projects page and projectOverview page
-AM-636: use visitor property for visitors dropdown list
-AM-706: fix project list infinite scroll on Safari
-AM-711: fix AR project deletion
-AM-722: fix editor opening from AR pages view
-AM-652: fix issue when user tries to create AR project with more than 200 pages
-AM-728-3: Enable Medialib for flow organisation that have specific flag
-AM-633: fix csv-zip doesn't work
-AM-721: fix background loading widget stay on screen infinitely when I update document
-AM-692-2: fix issue with template reader UI
-AM-692-3: Add possiblity to customize sidebar header background & icons
-AM-739: disable delete button if AR project in processing
-AM-740: pass parameters for google_analytics and google_tag_manager
-AM-745 : always pass in project PATCH parameters for googleTagManager & googleAnalytics
-AM-743 : fix update of google analytics permission for organization edition
-AM-793-3: disable delete button on projects-list and ar-pages
-AM-730: fix issue with changing thumbnail before sharing for SL
-AM-442: Removed redundant calls to /organisations to be more responsive and save the planet.
+- AM-602: get full info of organization after picking it in org dropdown
+- AM-476: fix nasty error when trying to publish an AR project
+- AM-596: fix error when set validity days for AR project
+- AM-602: fix permission error when switching to another organization
+- AM-642: fix error while trying to update the thumbnail
+- AM-649: fix error with cover images
+- AM-640 / AM-643: refresh web page when AR-page added/deleted
+- AM-625: make subdomain to not have uppercase letters in request
+- AM-660: fix bug which allow to add tag to a locked project
+- AM-647: Fix error in WebAR when the URL already exist
+- AM-655: Fix handling of webAR parameters when sharing a page
+- AM-661: Fix infinite loading if custom subdomain already used
+- AM-676: Ensure that project shortlink is unique
+- AM-618: fix cannot search by some tags
+- AM-635: fix cannot found visitor issue on stats page
+- AM-682: fix cannot change Alert email parameter
+- AM-684: fix wrong default language
+- AM-651 / AM - 652: fix error appear when user tries to create project with more than 200 pages
+- AM-688: fixed stacking upload project notifications
+- AM-701: fixed download raw data in project stats page
+- AM-670: desactivated link check faq link in webar-design
+- AM-704: fixed No AR projects in the list when first connexion
+- AM-651: fix errorMessage when user tries to create project with more than 200 pages
+- ISETO-123: remove oldManager links for ISETO
+- AM-693: fix different tags for projects page and projectOverview page
+- AM-636: use visitor property for visitors dropdown list
+- AM-706: fix project list infinite scroll on Safari
+- AM-711: fix AR project deletion
+- AM-722: fix editor opening from AR pages view
+- AM-652: fix issue when user tries to create AR project with more than 200 pages
+- AM-728-3: Enable Medialib for flow organisation that have specific flag
+- AM-633: fix csv-zip doesn't work
+- AM-721: fix background loading widget stay on screen infinitely when I update document
+- AM-692-2: fix issue with template reader UI
+- AM-692-3: Add possiblity to customize sidebar header background & icons
+- AM-739: disable delete button if AR project in processing
+- AM-740: pass parameters for google_analytics and google_tag_manager
+- AM-745 : always pass in project PATCH parameters for googleTagManager & googleAnalytics
+- AM-743 : fix update of google analytics permission for organization edition
+- AM-793-3: disable delete button on projects-list and ar-pages
+- AM-730: fix issue with changing thumbnail before sharing for SL
+- AM-442: Removed redundant calls to /organisations to be more responsive and save the planet.
 
 #### Changed
-AM-540: Added infinite-scroll on project ar pages
-AM-359: Changed error-message for AR project deletion if it in processing state
-AM-260: Improve error handling
-AM-359: Change the message for AR project deletion in processing state
-AM-644: Hide thumbnail for webAR for now
-AM-709: delete links to old Argoflow manager
-AM-683: implement paginator instead of infinite scroll on Projects, AR-Pages, SL-Pages, Messages, Users, and Organizations
-AM-590-b : fixed projets.service to support google tracking for ar projects
-AM-738: Let user see and copy all Examples (organization independant)
+- AM-540: Added infinite-scroll on project ar pages
+- AM-359: Changed error-message for AR project deletion if it in processing state
+- AM-260: Improve error handling
+- AM-359: Change the message for AR project deletion in processing state
+- AM-644: Hide thumbnail for webAR for now
+- AM-709: delete links to old Argoflow manager
+- AM-683: implement paginator instead of infinite scroll on Projects, AR-Pages, SL-Pages, Messages, Users, and Organizations
+- AM-590-b : fixed projets.service to support google tracking for ar projects
+- AM-738: Let user see and copy all Examples (organization independant)
 
 ### Editor:
 #### Added
-AE-573: Add beta message in IE modals
-AE-449: Allow to undo/redo behaviors & context variable creation, edition & deletion
-AE-528: Add "fullscreen" IE actions
-AE-576: IE config save failure not handled
-AE-557: Handle conditions & context variables when copy/paste assets
-AE-578: Added Export Aura in PDF
-AE-381: add GLB convertation for medialib
-AE-563: Create dedicated "assetService" to handle page/document assets
-AE-578: Add possibility to save pdf with interactions as local pdf file.
-AE-611: add new format jpeg for guessMimeType method in ContentManager
-AE-562: add new section "scripts"
+- AE-573: Add beta message in IE modals
+- AE-449: Allow to undo/redo behaviors & context variable creation, edition & deletion
+- AE-528: Add "fullscreen" IE actions
+- AE-576: IE config save failure not handled
+- AE-557: Handle conditions & context variables when copy/paste assets
+- AE-578: Added Export Aura in PDF
+- AE-381: add GLB convertation for medialib
+- AE-563: Create dedicated "assetService" to handle page/document assets
+- AE-578: Add possibility to save pdf with interactions as local pdf file.
+- AE-611: add new format jpeg for guessMimeType method in ContentManager
+- AE-562: add new section "scripts"
 
 #### Fixed
-AE-512 / AE-565: Mobile/desktop only visibility issues
-AE-572: Fix error with context variables in AR projects IE config
-AE-501: Fix bug with asset rotation: move area was not rotated
-Fix animation dropdown
-PIC-149: Fix favicon for pic-editor
-AE-551: Fix translation for media-toggle IE action
-AE-603: handle migrated resources urls
-AE-607: fix bug that prevent to save AR project when interaction engine config is empty.
-AE-598: fix cannot add some types of assets to ArProject
-AE-593: fix drop-down list isn't editable
-AE-595: show a correct message when file is big
-PIC-234: fix url was modified resulting in misinterpretation by the viewer
-AE-618: fix IE config saving after AE-610
-AE-587: Fix issue which displayed the editor very small at project opening.
-AE-604: Fix issue with assets names
-AE-619: fix undo & deleted asset after saved
-AE-488: handling gif decoding errors
-AE-622: Fix use of medialib for asset video or image in PDFZ project
-AE-623: Always use bear API token to open medialib
+- AE-512 / AE-565: Mobile/desktop only visibility issues
+- AE-572: Fix error with context variables in AR projects IE config
+- AE-501: Fix bug with asset rotation: move area was not rotated
+- Fix animation dropdown
+- PIC-149: Fix favicon for pic-editor
+- AE-551: Fix translation for media-toggle IE action
+- AE-603: handle migrated resources urls
+- AE-607: fix bug that prevent to save AR project when interaction engine config is empty.
+- AE-598: fix cannot add some types of assets to ArProject
+- AE-593: fix drop-down list isn't editable
+- AE-595: show a correct message when file is big
+- PIC-234: fix url was modified resulting in misinterpretation by the viewer
+- AE-618: fix IE config saving after AE-610
+- AE-587: Fix issue which displayed the editor very small at project opening.
+- AE-604: Fix issue with assets names
+- AE-619: fix undo & deleted asset after saved
+- AE-488: handling gif decoding errors
+- AE-622: Fix use of medialib for asset video or image in PDFZ project
+- AE-623: Always use bear API token to open medialib
 
 #### Changed
-AE-511 / AE-575: Simplify code handling login & initial api calls
-PIC-145: disable IE for PIC-editor + add "app_id" parameter to login
-Update PICMedia url for PIC-editor
-PIC-122: Display dashed rectangle around marker in PIC-editor
-PIC-154: change text of "test" button for PIC-editor
-AE-484: Change value Distance by Position for "move_to" assetAction
-AE-584: Save IE config in book for AR project instead of in marker
-AE-610: Save ie config to AR marker in addition to book until native app is updated (cf AE-584)
-AE-615: Enable Medialib for flow organisation that have specific flag
-AE-615: Enable Medialib for flow organisation that have specific flag
-AE-610: Save ie config to AR marker in addition to book until native app is updated
+- AE-511 / AE-575: Simplify code handling login & initial api calls
+- PIC-145: disable IE for PIC-editor + add "app_id" parameter to login
+- Update PICMedia url for PIC-editor
+- PIC-122: Display dashed rectangle around marker in PIC-editor
+- PIC-154: change text of "test" button for PIC-editor
+- AE-484: Change value Distance by Position for "move_to" assetAction
+- AE-584: Save IE config in book for AR project instead of in marker
+- AE-610: Save ie config to AR marker in addition to book until native app is updated (cf AE-584)
+- AE-615: Enable Medialib for flow organisation that have specific flag
+- AE-615: Enable Medialib for flow organisation that have specific flag
+- AE-610: Save ie config to AR marker in addition to book until native app is updated
 
 
 ## [2.15](https://github.com/bear2b/argoflow-k8s/releases/tag/2.15)
