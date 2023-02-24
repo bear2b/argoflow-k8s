@@ -7,6 +7,10 @@ To migrate from 2.13 to 2.14 you need to perform following steps:
 ```sql
 USE wizeflow;
 
+DROP TABLE IF EXISTS wizeflow.old_tracks_page_views_by_date;
+DROP TABLE IF EXISTS wizeflow.old_tracks_views_by_smartlink_id;
+DROP TABLE IF EXISTS wizeflow.old_tracks_page_views_count_by_organization;
+
 SET max_partitions_per_insert_block=1000;
 
 CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_organization_id_smarlink_id_dt

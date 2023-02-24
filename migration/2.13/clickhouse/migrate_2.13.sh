@@ -13,6 +13,10 @@ function checkIfMutationsAreDone {
   done
 }
 
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.old_tracks_page_views_by_date"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.old_tracks_views_by_smartlink_id"
+clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.old_tracks_page_views_count_by_organization"
+
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_view_by_member_id_dt"
 
 clickhouse-client --query="DROP TABLE IF EXISTS wizeflow.tracks_page_views_by_date"
@@ -191,57 +195,6 @@ from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='sl' and event='open'
 group by smartlink_id, visitor, email, fp"
 
-
-clickhouse-client --query="SET max_partitions_per_insert_block=1000"
-clickhouse-client --query="CREATE MATERIALIZED VIEW wizeflow.old_tracks_page_views_by_date
-ENGINE = AggregatingMergeTree() 
-PARTITION BY left(ifNull(smartlink_id,'00'),2) 
-ORDER BY (smartlink_id, date, visitor, page)
-POPULATE
-AS 
-select ifNull(smartlink_id,'0000') smartlink_id, 
-toDate(dt) date, 
-ifNull(visitor,'') visitor,
-ifNull(page,0) page, 
-countIfState(event='open') views,
-maxIfState(toInt32OrZero(data), event='view') last_viewed, 
-sumState(toInt32OrZero(data)) view_seconds, 
-uniqExactIfState(fp, event='open') devices
-from wizeflow.tracks
-where object='page' and event in ('view','open') and page>0 and fp!='' and visitor!='anonymous'
-group by smartlink_id, toDate(dt), visitor, page
-order by page"
-
-
-clickhouse-client --query="SET max_partitions_per_insert_block=1000"
-clickhouse-client --query="CREATE MATERIALIZED VIEW wizeflow.old_tracks_views_by_smartlink_id
-ENGINE = AggregatingMergeTree() 
-PARTITION BY left(ifNull(smartlink_id,'00'),2) 
-ORDER BY ifNull(smartlink_id,'0000')
-POPULATE
-AS 
-select ifNull(smartlink_id,'0000') smartlink_id, 
-countIfState(object='sl' and event='open') views, 
-sumIfState(toInt32OrZero(data), object='page' and event='view') view_seconds, 
-uniqExactIfState(fp, object='sl' and event='open') devices
-from wizeflow.tracks
-where fp!='' and visitor!='anonymous'
-group by smartlink_id"
-
-
-clickhouse-client --query="SET max_partitions_per_insert_block=1000"
-clickhouse-client --query="CREATE MATERIALIZED VIEW wizeflow.old_tracks_page_views_count_by_organization
-ENGINE = AggregatingMergeTree() 
-PARTITION BY left(ifNull(organization_id,'00'),2) 
-ORDER BY (organization_id,date)
-POPULATE
-AS 
-select ifNull(organization_id,'0000') organization_id,
-toDate(dt) date,
-countState() views
-from wizeflow.tracks
-where fp!='' and visitor!='anonymous' and object='sl' and event='open'
-group by organization_id,toDate(dt)"
 
 clickhouse-client --query="ALTER TABLE wizeflow.tracks ADD COLUMN batch_id Nullable(String) AFTER user_id"
 
