@@ -84,10 +84,16 @@ spec:
           value: {{ .Values.smartlinkCreator.parameters.towerEnv }}
         - name: AXEPTIO_ENABLED
           value: "{{ .Values.smartlinkCreator.parameters.showCookiesPopup }}"
+        - name: SHOW_MOBILE_WELCOME
+          value: "{{ .Values.smartlinkCreator.parameters.showMobileWelcomePopup }}"
         - name: URL_TO_STATS
           value: "{{ .Values.smartlinkCreator.parameters.urlToStats }}"
         - name: STORAGE_URL
           value: "{{ .Values.smartlinkCreator.parameters.storageUrl }}"
+        - name: DEFAULT_LANGUAGE_ID
+          value: "{{ .Values.smartlinkCreator.parameters.defaultLanguageId }}"
+        - name: DEFAULT_TIME_ZONE
+          value: "{{ .Values.smartlinkCreator.parameters.defaultTimeZone }}"
       imagePullSecrets:
       - name: regcred
       volumes:

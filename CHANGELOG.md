@@ -29,6 +29,8 @@
 
 ### Reader / Smartlink Creator:
 #### Added
+- ISETO-130: Added SHOW_MOBILE_WELCOME parameter to show/hide mobile welcome message
+- ISETO-129: Batch email notification date timezone and language
 - WR-226: Make a demo of mobile onboarding popin using IE
 - WR-264: Implement ArgoflowReader editor view
 
