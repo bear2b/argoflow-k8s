@@ -93,7 +93,7 @@ spec:
         - name: DEFAULT_LANGUAGE_ID
           value: "{{ .Values.smartlinkCreator.parameters.defaultLanguageId }}"
         - name: DEFAULT_TIME_ZONE
-          value: "{{ .Values.smartlinkCreator.parameters.defaultTimeZone }}"
+          value: {{ .Values.smartlinkCreator.parameters.defaultTimeZone }}
       imagePullSecrets:
       - name: regcred
       volumes:
