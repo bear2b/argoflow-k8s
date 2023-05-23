@@ -3,13 +3,13 @@
 name: argoflow
 api:
   name: argoflow-api-v2
-  version: "2.16"
+  version: "2.17"
 smartlinkCreator:
   name: smartlink-creator
-  version: "2.16"
+  version: "2.17"
 editor:
   name: editor
-  version: "2.16"
+  version: "2.17"
 manager:
   name: manager
-  version: "2.16"
+  version: "2.17"

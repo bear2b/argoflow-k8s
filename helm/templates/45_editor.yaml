@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: editor-conf
+  namespace: argoflow
+data:
+  app-config.json: |
+    {}
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,11 +35,20 @@ spec:
       - name: {{ .Values.editor.name }}
         image: {{ .Values.editor.image.repository }}:{{ .Values.editor.version }}
         imagePullPolicy: {{ .Values.editor.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/assets/app-config.json
+          subPath: app-config.json
+          readOnly: true
+          name: editor-conf
         env:
         - name: NODE_ENV
           value: {{ .Values.editor.parameters.nodeEnv }}
         - name: ALLOWED_DOMAINS_LIST
           value: "{{ .Values.editor.parameters.allowedDomainsList }}"
+      volumes:
+      - name: editor-conf
+        configMap:
+          name: editor-conf
       imagePullSecrets:
       - name: regcred
 

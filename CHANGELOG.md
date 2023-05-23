@@ -2,6 +2,226 @@
 
 ---
 
+## [2.17](https://github.com/bear2b/argoflow-k8s/releases/tag/2.17)
+
+### Migration notes
+
+### API:
+#### Added
+- WAPI-790: Add possibility to save Layers from editor
+- WAPI-787: payment_notification_state sync between AF and BEAR apis
+- WAPI-780: LookerStudio clickhouse connector
+- WAPI-768: Delete tmp files after operations
+- WAPI-781: Static subscription properties
+- WAPI-775: Ability to check the organization name/sl_sub_domain/storage_folder availability
+- WAPI-727: Tracking phone notifications
+- WAPI-728: Restrict all not GET calls if organization is blocked
+- WAPI-712: IE permission in organization
+- WAPI-776: Add "IE" AR permission to organization
+- WAPI-769: Proxy for customers
+- WAPI-720: Printed and downloaded count in the organization and project summary calls
+- WAPI-774: Automatic database schema migration
+- WAPI-752: Add an ability to set google_analytics permission for ar projects
+- WAPI-759: Add possibility to add a script to collection
+- WAPI-732: Show users from child organization by default
+- WAPI-754: Duplicating SL project should include IE configuration
+- WAPI-762: Add a "managedBySso" parameter to organization
+- WAPI-718: Collection integration to SLs
+- WAPI-726: Show projects from child organization by default
+
+#### Fixed
+- WAPI-797: FP feature with wrong expiration date
+- WAPI-706: Timezone offset not handle summer time
+- WAPI-791: Cannot set BAPI (AR) features via Argoflow api
+- WAPI-789: User become "conflict" when I delete it and create new account with same e-mail
+- WAPI-783: Newly created PDF org has IE option false by default
+- WAPI-771: Cannot set a root folder to project
+- WAPI-724: While update of thumbnail 500 error shown
+- WAPI-766: Current quota consumption for SL views shows incorrect results
+
+#### Changed
+- WAPI-757: Custom error code when trying to delete a reader template linked to some SL
+- WAPI-761: Folders to projects
+
+### Reader / Smartlink Creator:
+### Added
+- WR-307: added Matomo
+- ISETO-130-2: Added SHOW_MOBILE_WELCOME parameter to show/hide mobile welcome message
+- WR-309: Added scale_to/_by and rotate_to/_by actions
+- WR-322: Added backward compatibility for scale and rotate actions
+- AE-444: Handle "MEDIA_START" & "MEDIA_STOP" events in Interaction Engine
+- WR-297: Added Open_URL action in IE
+- WR-265: Added loading spinner
+
+### Fixed
+- PIC-268: error on rotated image display
+- WR-300: add rotation to video tag if it has IE rotation action
+- WR-301: fixed IE rotation for WebViews and 2d Slider
+- WR-310: Most assets appear only after zoom/change size of page
+- AE-668: Fixed wrong parsing of scripts
+- WR-313: Sound of video continue to play if video is closed by IE
+- AE-668-2: Cannot use scripts in editor
+- WR-316: Fixed assets are rotated by IE, change angle after off/on augmentation
+- WR-314: fixed not rotated basic elements (e.g phone, url)
+- WR-306: fixed scale by and rotate to/by actions and made the div encapsulation work
+- WR-318: fixed webview not opened in modal
+- ISETO-129: Batch email notification date timezone and language
+- WR-291: added disableEmbeddedData variable which we can switch to allow to get data from online api or from embedded pdf
+- WR-298: Reader distort aspect ratio of images when zoom page
+- AE-629: fixed incorrect text encoding in webview
+- WR-299: fixed webviews
+
+### Changed
+- ISETO-133: Vulnerability 3 - external file
+- ISETO-132: Vulnerability 2 - express header
+- ISETO-131: Vulnerability 1 - Delete deprecated feature
+- WR-315-2 : Can now import IE v2.0
+- WAPI-764: Don't wait for "api.ipify.org" response and store IP in local storage
+- WAPI-765: Set uuidSerial again
+
+### Manager:
+#### Added
+- AM-819: Added sharing option embed FP
+- AM-789-2: Added subscription information to organisation
+- AM-806-3: Resize images w/o reduce quality of AR Projects used in the Manager
+- AM-794: Add possibility to discard a marker from recognition
+- AM-789: Added subscription information to organisation
+- AM-783: update Angular from v11 to v13 and other dependencies
+- AM-787: Added the possibility to change email preferences
+- AM-805: add bgMode for delete project
+- AM-795-3: Allow superadmin/accountManager to define an owner of created project from choosen organization
+- AM-809: fix AR organisation doesn't create w/o IE flag
+- AM-616: Add new organisation option Interaction Engine by organisation
+- AM-774-2: Add the possibility to see an example before using it
+- AM-773: Resize uploaded images bigger than 5Mo
+- AM-599: Added stats about PDF documents prints and downloads in project stats and global organization stats
+- AM-747: Allow posibility to upload Ar-pages on background mode
+- AM-755: Added a description for templates
+- AM-749-2: Added ability to open a SL in new tab from a list view
+- AM-752: Update templates to let them use images and texts
+- AM-752-2: Update templates to let them use images and texts
+- WR-295: Allow custom cookies for Symbiotix
+- AM-746: Allow possibility to duplicate Ar project
+
+#### Fixed
+- AM-824: Fixed issue with number of SL pages when open test modal or editor
+- AM-825: Show project name on hover
+- AM-831: Fixed issue with cropped icons on project-statistic page
+- AM-833: Fixed invalid date in organization subscriptions dates forms
+- AM-829: Fixed impossible to create Free Page project
+- AM-832: Fixed impossible to create subOrganizations
+- AM-812: add unsubscription logic to app, home and project-list components
+- AM-823-2: handle image and PDF for AR project creation
+- AM-831: Fixed issue with cropped icons on project-statistic page
+- AM-833: Fixed invalid date in organization subscriptions dates forms
+- AM-803: Sub-domain name check restrictions
+- AM-807: fixed duplicated calls on project-list
+- AM-793: fixed wrong webAR settings for projects
+- AM-816: Don't send cliend_id parameter to AF API GET /tags call
+- AM-805-2: fixed AR deletion logic for confirm modal
+- AM-817: Don't preload the tag list, but search on the fly
+- AM-818: Fixed all folder don't call to all projects
+- AM-802: Fixed issue with time for planned messages
+- AM-781: New project created in selected folder
+- AM-785: Fixed sorting of Free Page projects
+- AM-779: Get list of folders by organization
+- AM-657: fix bug with pages 201 and more in AR Project
+- AM-808: Display error message if Ar page cannot be updated 
+- AM-620-2: Fixed free page default look and behaviours
+- AM-689-2 : Fixed folder manager behaviours and style.
+- AM-778: Update floder list after login
+- AM-786-4: Enable "display list" option for Nathan's organization
+- AM-771: Fixed locked project setting change Example state
+- AM-761: Fixed impossible to make a copy from SL with custom thumbnail
+- AM-784: Disable the ability to create FP if organisation does not have permission
+- AM-744: fix issue cannot change page for AR projects
+- AM-554: remove message on project-stats page after page refreshing 
+- AM-758: fix cannot create SL with Embedded AURA if embedded_pdf option deactivated for organization 
+- AM-751: fixed issue cannot check Extended Tracking and Social marker for AR page
+- ISETO-128: fixed download raw data doesn't work as expected
+- AM-759: don't show a message about non-payment for superadmin and account-manager
+- AM-731: unpublish Ar-project duplicated from examples
+- AM-762: Enable background mode for the duplicate project from Examples
+- AM-766: fixed the ratio of pages previews
+- AM-767: hide templates menu for organization with AR only
+- AM-764: Clear previous results when switched between tabs on projects-list
+
+#### Changed
+- AM-826: Replaced field pageId by dropdown with pages id into reco webarsettings
+- AM-838: Changed freepage root url to use the not webview link
+- AM-821: Fixed requests and error message displayed when it shouldn't
+- AM-815: AM-815: make create / update SL projects in background mode only
+- AM-792: Change FP url
+- AM-763: Change encoding/decoding of landing pages, to awoid issues with special characters
+- AM-763b fixes: Added retro compatibility for non escaped encoding. type error btoa to atob
+- AM-763c Fixed type error btoa to atob
+- AM-776: Rename 'root' to 'all folders'
+- AM-772-2: changed modal remove lang text
+- AM-777: Set project as private when it moved to private folder
+- AM-750-2: Revert of AM-750
+- AM-750: show Gyro option only if AR-project has one page
+
+### Editor:
+#### Added
+- AE-601-2: allow use IE for multilang campaigns 
+- AE-642-3: Allow playing a scene on the editor
+- AE-656: Added global for context variables in AR projects
+- AE-679: Added new property for each element of IE "data"
+- AE-627: Added ability to choose audio asset to apply IE SHOW/HIDE_FULLSCREEN action on it
+- AE-638: Allow floating point values for any kind of transformations
+- PIC-231: Added translations for toolbar categories on left menu.
+- PIC-249: Export Experiences in PDF with auras in place
+- AE-609-2: added logic if no thumbnails, draw them using pdf pages data
+- AE-583-3: add "scale" and "rotate" actions for AR
+- AE-590: add errors from argo manager
+- AE-583: add "scale" & "rotate" actions for SL
+- AE-591: Add eslint
+- AE-444: add MEDIA_START & MEDIA_STOP events to IE
+- AE-631: Add openURL action in IE
+- AE-633: Added MEIDA_START & MEDIA_STOP as possible AR events
+
+#### Fixed
+- AE-675: get correct language even when not multilang
+- AE-634-2: fix filtering when no languageId for interaction
+- AE-664: replace hardcoded url for ArPlayScene modal
+- AE-652: Fixed conditions don't copy with behaviour
+- AE-436-2: Keep "cover icon" checkbox unchecked for PDF projects after saving
+- AE-653: Fixed translations for values scale/rotation actions
+- AE-660: Cannot add condition with global variable
+- AE-668: Scripts are encoded after save
+- AE-643: Trim spaces in the userName field in the login popup
+- AE-670: Fixed issues with UI of settings in the context variable modal
+- PIC-314: Fixed export with embedded auras for PIC
+- AE-646: show warning when set asset as inactive
+- AE-674: Fixed copy paste behaviors which contains variable actions
+- AE-674-2: Added mutation languageId for ctxVariables in paste method
+- AE-673: show variables depending on the current lang
+- AE-680: hotfix incorrect ie order depending of pages
+- AE-682: Fixing IE Invalid json : ""
+- AE-686: Disabled temporary rotate_to, scale_to/by for AR projects
+- AE-436: Keep "cover icon" checkbox unchecked for PDF projects after saving
+- AE-628: make button "Save" clickable after "Save to disk" button was clicked
+- hotfix: add ternary op to fix saveEmbeddedPdf
+- AE-632: fix copying assets if they have conditions with context variables
+
+#### Changed
+- AE-634: rewrite IE in array style
+- AE-647-2: fix export of pdf with aura in place
+- AE-661: Import PDF with aura in place with old IE version
+- AE-654-2: Allow possibility to set dot/comma as decimal separator for properties 
+- AE-658: Disabled undo/redo buttons if nothing to undo/redo
+- AE-641-2: Disabled IE if organization doesn't have enabled option "IE"
+- AE-678: Changed order of pages for AR projects
+- PIC-316: video asset with play button
+- ISETO-137: Disabled scripts for ISETO (until fully functional)
+- PIC-249-3 : Export PDF with aura in place for PIC
+- PIC-291: replace word "Media Library" by "PICmedia"
+- PIC-275: Enable File asset for PIC
+- AE-640: Replace scale and rotate by scale_to/by and rotate_to/by actions
+- PIC-249-2 : Hide export button while it's not fully functional
+- AE-639-2: Hide x,y,z fields for scale action by default 
+
+
 ## [2.16](https://github.com/bear2b/argoflow-k8s/releases/tag/2.16)
 
 ### Migration notes
