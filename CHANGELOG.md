@@ -30,6 +30,7 @@
 - WAPI-726: Show projects from child organization by default
 
 #### Fixed
+- WAPI-801: Wrong first_visit and last_visit date in project detail stats call
 - WAPI-797: FP feature with wrong expiration date
 - WAPI-706: Timezone offset not handle summer time
 - WAPI-791: Cannot set BAPI (AR) features via Argoflow api
