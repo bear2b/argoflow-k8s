@@ -45,6 +45,8 @@ spec:
           value: {{ .Values.editor.parameters.nodeEnv }}
         - name: ALLOWED_DOMAINS_LIST
           value: "{{ .Values.editor.parameters.allowedDomainsList }}"
+        - name: AURA_HOST
+          value: "{{ .Values.editor.parameters.storageUrl }}"
       volumes:
       - name: editor-conf
         configMap:
