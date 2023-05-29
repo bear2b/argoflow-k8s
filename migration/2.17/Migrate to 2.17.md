@@ -11,6 +11,7 @@ kubectl cp -n argoflow migration/2.17/clickhouse/. <your clickhouse pod name>:/a
 kubectl exec -it -n argoflow <your clickhouse pod name> -- bash
 cd /argoflow
 clickhouse-client --multiquery < 00_views.sql 2>&1 | tee -a 00_views_result.txt
+clickhouse-client --multiquery < 01_views_cleanup.sql 2>&1 | tee -a 01_views_cleanup_result.txt
 ```
 4. Copy js scripts from (mongo)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.17/mongo] folder to the mongo pod:
 ```bash
