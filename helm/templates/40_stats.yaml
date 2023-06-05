@@ -17,10 +17,6 @@ spec:
       containers:
       - name: clickhouse-bulk
         image: nikepan/clickhouse-bulk:1.3.7
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
         - name: tcp
           containerPort: 8124
