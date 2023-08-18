@@ -130,7 +130,7 @@ spec:
     #       privileged: true
       containers:
       - name: clickhouse
-        image: clickhouse/clickhouse-server:22.9.3
+        image: clickhouse/clickhouse-server:23.7.4
         ports:
         - containerPort: 8123
         - containerPort: 9000
