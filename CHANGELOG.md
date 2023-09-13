@@ -8,6 +8,142 @@
 
 ### API:
 #### Added
+- PIC-412: Ability to create PDF from images
+- WAPI-813: [Looker studio] Ability to work with external CH database
+- WAPI-468: Remove exif from uploaded Video
+- WAPI-641: Add owner property to /projects api call
+- WAPI-803: Project description
+- WAPI-784: Add timeout to logging requests
+
+#### Fixed
+- WAPI-816: Wrong extension for video/quicktime files
+- WAPI-808: Cannot duplicate a project with custom thumbnail
+- WAPI-809: Example duplicate returns deletion error if has tags
+
+#### Changed
+- WAPI-806: New tracking properties
+- WAPI-677: Account manager haven't access to all tags like as superadmin
+- WAPI-799: Update layers structure
+
+### Reader / Smartlink Creator:
+### Added
+- WAPI-817: Add SSO_URL env var
+- WAPI-805: Add a way to open a smartlink as anonymous
+- WR-327: Created IE related API to operate with ctx variables
+- WR-325: Added method to handle show in modal from webview asset
+- WR-273-3: Added button to reset IE for preview mode
+- WR-332: added possibility to load pdf from query url param
+- PIC-421: Added redirection to GAR connexion for GAR projects
+
+### Fixed
+- WAPI-815: Title is not applied in batch mode
+- WR-321: Fixed impossible trigger IE by click on webview asset
+- WR-324: Fixed display issue for video assets
+- WR-320: Fixed scale to actions
+- WR-329: fixed errors in console
+- ISETO-147: Fixed video not displayed correctly
+- WR-326: Fixed Play/pause media action doesn't work if target is same media
+- WR-330: fixed disappeared assets after changing the page scale
+- WR-336: Fixed document unavailable page doesn't work
+- WR-338-2: Fixed templates not applied anymore
+- WR-343: fixed assets disappear after unscrolling 10 pages
+- PIC-423: fixed unwanted 'play' button
+- PIC-426: fixed correct return of unavailable page parameters
+
+### Changed
+- AM-889: Removed play icon on videos
+- PIC-377: Changed 'page not found' design for PIC
+- WR-317: Changed referential for move to and move by actions
+- WR-256: Removed useless annotation bas64 code
+- AM-889: Removed play icon on videos
+
+### Manager:
+#### Added
+- AM-846-2: Added the possibility of deleting markers/pages in bulk
+- AM-597: Prefilled name and email field in Zendesk widget
+- AM-478: Added column in table with owner's email on project list page
+- AM-853: Added option Free Page to Organisation's options
+- AM-828: Added description of examples projects
+- AM-791: Switch to new tracking format; now tracking type and tracking id. Should ensure retrompatibility.
+- ISETO-143: Added environment variable to hide folders
+- AM-864-2: Warn the user if webAR settings cannot be copied
+- AM-865: use the real name "page_display" in manager for ar project pages
+- AM-866-2 : integrate TinyMCE for free pages
+
+#### Fixed
+- AM-830-2: Handle and display correct error message when duplicate example
+- AM-841-3: Fixed user blocked if no message when organization alerted
+- AM-835: Fixed delete previous reco-area when user creates new reco-area
+- AM-840: Fixed cannot change organization settings without changing subscription dates
+- AM-843-3: Hide e-mail preference if organization has not AR
+- AM-842: Fixed cannot add tags to AR project
+- AM-654: Fixed cannot back to parent organization from All organisations view
+- AM-852: remove useless params from free-page call
+- AM-861: ISETO - fix errors in console
+- AM-850: Update reco-area when window resized
+- AM-859-2: Fixed issue with all organizations dropdown
+- AM-871: Fixed button "Back" redirects to wrong route
+- AM-879: Fixed UI issue with material slider
+
+#### Changed
+- AM-827: Allowed to set project as example only for superadmins and account managers
+- AM-848: Changed error message in case of conflict user at login
+- AM-869: Handled the case when AR project is being deleted
+- ISETO-153: Do not fill end-date when setting start-date for ISETO SL
+
+### Editor:
+#### Added
+- AM-845-2: Added env vars to the server to customize hosts
+- AE-644-3: Add layers in editor
+- AE-571: Added logic to display and handle error if organization blocked
+- AE-672-2: added IE validator
+- AM-845-2: Added env vars to the server to customize hosts
+- AE-693: Added anonymous option to the play scene in SL
+- AE-709: add base logic for show/hide assets in specific view
+- AE-702: Added gizmos and view to help create bubble 360
+- AE-696: Added test coverage into IE service
+- AE-662-2: Allow the edition of scripts for AR
+- PIC-300: updated and fixed TinyMce lib, returned text Asset
+- AE-711: create asset in default layer
+
+#### Fixed
+- AE-684: Fixing errors in layer list
+- PIC-315: filter 3d models for embedded pdfs
+- AE-689: remove hotfix which creates issues with IE v1.1
+- AE-681: Fixed cannot copy AR scene to PDF
+- PIC-353: export embedded aura files
+- PIC-309-2: Hide Auto full screen checkbox for PIC projects
+- PIC-362-2: layers save url to books on BEAR
+- AE-691: Fix export of 2d sliders
+- AE-688: Fixed play scene doesn't working
+- AE-692: Fixed issue on saving related to IEvalidator
+- AE-694-b : Fixed play scene in editor
+- AE-699: Fixed IEValidator to prevent the creation of an empty action with ctx variables
+- PIC-374: Fixed PDF enrichi export for PIC
+- AE-698: Fixed IE showing up when organisation IE is disabled
+- AE-706: Fixed conversion of IE in case there is no data.
+- AE-697: Fixed unable to go back to root folder in embedded medialib browsing mode
+- AE-708: Fixed setting asset to invisible layer
+- PIC-395: Added extension .gif to giphy to be able to detect mimetype
+- AE-715: cannot use play scene option with PDF
+- PIC-438: unwanted folders appear browsing PICmedia
+
+#### Changed
+- AE-685: Removed warning about multiple autoplay videos if no IE behaviors
+- PIC-333: rename Test RA to Test PICViewer and add button Test PICNum
+- PIC-371: Hide "Play scene" button for PIC
+- AE-701: Ignored by mouse locked assets
+- AE-707: Upgraded Angular version from 13 to 14
+- PIC-402: Changed "create PDF" button color
+- PIC-404-2: Updated version of bear API to 2.13 for mediaFolders
+
+
+## [2.17](https://github.com/bear2b/argoflow-k8s/releases/tag/2.17)
+
+### Migration notes
+
+### API:
+#### Added
 - WAPI-790: Add possibility to save Layers from editor
 - WAPI-787: payment_notification_state sync between AF and BEAR apis
 - WAPI-780: LookerStudio clickhouse connector
