@@ -2,7 +2,7 @@
 
 ---
 
-## [2.17](https://github.com/bear2b/argoflow-k8s/releases/tag/2.17)
+## [2.18](https://github.com/bear2b/argoflow-k8s/releases/tag/2.18)
 
 ### Migration notes
 
