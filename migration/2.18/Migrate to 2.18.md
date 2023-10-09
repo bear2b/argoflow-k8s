@@ -15,6 +15,7 @@ kubectl cp -n argoflow migration/2.18/clickhouse/. <your clickhouse pod name>:/a
 kubectl exec -it -n argoflow <your clickhouse pod name> -- bash
 cd /argoflow
 clickhouse-client --multiquery < 00_dict_smartlinks.sql 2>&1 | tee -a 00_dict_smartlinks.txt
+clickhouse-client --multiquery < 01_detail_view_smarltinks.sql 2>&1 | tee -a 01_detail_view_smarltinks.txt
 ```
 
 4. Do `helm upgrade`
