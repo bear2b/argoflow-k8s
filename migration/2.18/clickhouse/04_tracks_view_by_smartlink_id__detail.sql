@@ -8,7 +8,7 @@ ORDER BY (smartlink_id, date, fp)
 POPULATE
 AS 
 select ifNull(smartlink_id,'0000') smartlink_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 ifNull(fp, '') fp,
 substr( max(concat(toString(dt),visitor)), 20) visitor_name,
 any(email) email,
@@ -35,4 +35,4 @@ countIfState(object='page' and event='open') page_views,
 sumIfState(toInt32OrZero(data), object='page' and event='view') view_seconds
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and ((object='page' and event in ('view','open')) or (object='sl' and event in ('open','download_document','print')))
-group by smartlink_id, toDate(dt), fp;
+group by smartlink_id, date, fp;
