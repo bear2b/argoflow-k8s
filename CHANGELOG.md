@@ -16,6 +16,7 @@
 - WAPI-784: Add timeout to logging requests
 
 #### Fixed
+- WAPI-833: Use timezone for date calculation
 - WAPI-816: Wrong extension for video/quicktime files
 - WAPI-808: Cannot duplicate a project with custom thumbnail
 - WAPI-809: Example duplicate returns deletion error if has tags
