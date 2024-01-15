@@ -2,6 +2,163 @@
 
 ---
 
+## [2.19](https://github.com/bear2b/argoflow-k8s/releases/tag/2.19)
+
+### Migration notes
+
+### API:
+- SSO-123: Read-only users
+- WAPI-842: Don't let create a token in SSO mode if call is NOT from SSO
+
+### Fixed
+- WAPI-850: Impossible to get token in SSO MODE
+- WAPI-847: Undocumented error for restricted calls in sso mode
+
+### Changed
+- WAPI-835: Tags optimization
+- WAPI-832: Delete user data if organization has no any admin
+- AM-981: Update reader template json schema
+
+### SSO:
+#### Added
+- SSO-122: Model Viewer feature for BAPI
+- SSO-123: Read-only users
+- SSO-116: Product names for subscription emails
+#### Fixed
+- SSO-124: Role id (account manager) is not set to product users
+#### Changed
+- SSO-137: Ability to use SSO without GAR and BAPI
+
+### Reader / Smartlink Creator:
+### Added
+- WAPI-845: Dynamic asset positioning
+- WAPI-838: Save assets files into HTML as base64 in batch mode
+- ISETO-156: Private storage for batch PDF archives
+- WR-346: Added user's timezone offset in minutes for all tracking events
+- WAPI-837: Ability to read Factur-X from pdf
+- AM-981-1: Added css rules for space between pdf pages
+
+### Fixed
+- WAPI-858: placeholder instead of text in the password window
+- WR-349: Wait for the load of IE before triggering any event
+
+### Changed
+- 
+
+### Manager:
+#### Added
+- AM-957: Added a checkbox 'Operation à renouveler' to the organisation
+- AM-876-2: Added Free Page stats and script to send statistic
+- AM-981-1: Added css rules for space between pdf pages
+- AM-980: remove caching of translation locales
+- AM-943: Added model viewer option in organization free pages parameters
+- WEBAR-728: Changed links to quick-editor
+- AM-894-2: Added new fields: contact emails and contact language for organization
+- AM-944: Enabled option Autostart for Gyroscope
+- AM-872-2: Added new ArType project bubble 360
+- AM-931-2: Added new option Quick Editor for organization
+- AM-930-2: Added ability to edit project with Quick Editor
+- AM-932: Added new tab Quick Projects
+- AM-933: Updated quick Editor url
+- AM-912: Added possibility to choose WebAR version
+- AM-873: Added new type of FP project Model viewer
+- AM-986: Added Beta label for Quick Project
+- AM-904: Added the possibility to copy embedded code from AR page
+- AM-897: Added checkbox for AR GoogleAnalytics
+- AM-898: Show tracking only if has permission
+- AM-923: Added GET user/organization_by_product
+
+#### Fixed
+- AM-962: Fixed cannot create suborganization by admin
+- AM-951: fixed empty organization_id for tags call for Argo organization
+- AM-974: Got error when login to org with Free page only
+- AM-950: Fixed Wrong e-mail set as projects owner for Account Manager
+- AM-959: Fixed selection parent organizationId in organization modal
+- AM-982: Send custom webar options to quickEditor
+- AM-979: Fixed free page only users can see AR projects in examples
+- AM-990: Fixed translations
+- AM-978: fixed condition for reassign project on delete used
+- AM-983: Fixed wrong color for success message
+- AM-987: Fixed organization_id not send when update user
+- AM-795-2 : Fixed assignement to other user for SSO2 when creating project.
+- AM-936: Couldn't create reco areas.
+- AM-953-3: Fixed cannot create suborgranization
+- AM-921: Couldn't choose someone to reassign projects at user deletion
+- AM-952: Handled error "bapiErrEmptyToken"
+- AM-967: Handled the case of no right at all
+- WEBAR-717: Added close icon for webar ui customization
+- AM-970: Fixed issue with webAr settings
+- AM-949: Fixed wrong FP request
+- AM-975: Fixed cannot create new free-page
+- AM-976: Changed scripts endpoints accordingly to the environement
+- AM-977: Used sso organization id to update free-project
+- AM-896: Fixed issue with visitors dropdown on project stats
+- AM-901: Use product ids for calls to products' APIs
+- AM-910: Fixed cannot change organisation settings
+- AM-903-2: Fixed couldn't search for user
+- AM-907-2: Fixed cannot chose any org in dropdown
+- AM-919: Fixed cannot see users from other orgs
+- AM-922: Fixed missing fields not saved into organization
+- AM-924: Fixed errors related to statistics
+- AM-927: Fixed errors related to organizations with FP only
+- AM-929: Could not change user avatar
+- AM-939: Fixed folders
+- AM-940: Fixed email-alert
+- AM-795-2 : Fixed assignement to other user for SSO2 when creating project.
+
+#### Changed
+- MV-6: Reworked CSS for default model-viewer style
+- AM-862-2: Changed method to upload a files on PDF projects
+- AM-961: Hide bubble and modelViewer for this sprint
+- AM-964: Allow possibility to edit quick project only for owners
+- AM-948: Removed old message 'Original file data not available for old AR projects' 
+- AM-985: Added query parameters to center bubble in AR project
+- AM-887: Inform user when duplicate a project from Examples
+- AM-890-2: Changed description display for Examples
+- ISETO-153: Do not fill end-date when setting start-date for ISETO SL
+- AM-857: Disabled the link to the old manager
+- AM-917: Changed format of organization settings for ssoV2
+- AM-926: Changed format of dates for ssoV2
+- AM-916-3: Changed password allowed char to match BE
+- AM-927-2: Added shortlinks for BAPI.
+- AM-935: Cannot add tag to project.
+- AM-945: Changed access to AR by flag is_hidden
+
+### Editor:
+#### Added
+- AE-753-2: Added export JSON data of IE + Auras
+- AE-758: remove caching of translation locales
+- AE-756: moved all api calls to v2.13
+- AE-736: added locked view in the center for Bubble 360 project
+- AE-732-2: Added possibility to copy layers + copy everything
+- AE-740: Added name validation for creating layer
+- AE-743: Added new parameter to allow plaiyng multiple media
+- AE-724: added possibility to change background color of text assets
+- WR-340: added Page Displayed event
+- AE-727: Added button to show/hide marker in playScene modal
+
+#### Fixed
+- AE-755: Fixed wrong uv for animated gifs
+- AE-747: IE saves only the first 20 pages
+- AE-754: IE saves with null data.
+- PIC-455: Fixed couldn't save nor load assets in PIC editor
+- PIC-438: unwanted folders appear browsing PICmedia
+- AE-722: fix incorrect condition for showing/hiding IE
+- AE-716: Remove Inactive asset warning message
+- AE-739 : fixed possibility to have several models playing their first animation in editor
+- AE-744: Fixed cannot create new behavior 
+- AE-745: Fixed conversion of layers
+
+#### Changed
+- AE-677-3: Check that url used in "instantFullScreen" action of ARProject can be embedded in an Iframe
+- AE-613: Connect with ssov2
+- AE-729: Increase the limit of symbols of the asset's title field
+- AE-725: Show login popUp window when token expired
+- AE-734: Upgraded Threejs version
+- AE-741: Allow increment/decrement context variable in AR projects
+- PIC-447: Allow interaction list for PIC
+
+
 ## [2.18](https://github.com/bear2b/argoflow-k8s/releases/tag/2.18)
 
 ### Migration notes

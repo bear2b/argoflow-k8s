@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sso
+  namespace: argoflow
+spec:
+  replicas: {{ .Values.sso.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.sso.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.sso.name }}
+        cluster: {{ .Values.labels.cluster }}
+      annotations:
+        timestamp: "{{ date "20060102-150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.sso.name }}
+        image: {{ .Values.sso.image.repository }}:{{ .Values.sso.version }}
+        imagePullPolicy: {{ .Values.sso.image.pullPolicy }}
+        command: ["./main"]
+        args: []
+        env:
+        - name: SSO_JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sso-secret
+              key: JWT_SECRET
+        - name: SSO_MASTER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sso-secret
+              key: MASTER_PASSWORD
+        - name: SSO_ISSUER
+          value: {{ .Values.sso.parameters.issuer }}
+        - name: SSO_MYSQL_HOST
+          value: {{ .Values.sso.parameters.mysql.host }}
+        - name: SSO_MYSQL_PORT
+          value: "{{ .Values.sso.parameters.mysql.port }}"
+        - name: SSO_MYSQL_SCHEME
+          value: {{ .Values.sso.parameters.mysql.database }}
+        - name: SSO_MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sso-secret
+              key: MYSQL_LOGIN
+        - name: SSO_MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sso-secret
+              key: MYSQL_PASSWORD
+        - name: SSO_CHECK_SESSION
+          value: "{{ .Values.sso.parameters.checkSession }}"
+        - name: SSO_EVENT_SERVER_HOST
+          value: {{ .Values.sso.parameters.eventServer.host }}
+        - name: SSO_GAR_ENABLED
+          value: "{{ .Values.sso.parameters.gar.garEnabled }}"
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sso
+  namespace: argoflow
+  annotations:
+    # Add BAPI/WAPI Developers group
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8090
+  selector:
+    name: {{ .Values.sso.name }}

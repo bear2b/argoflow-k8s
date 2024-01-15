@@ -5,6 +5,7 @@
   "accessControlAllowOrigin": [],
   "ssoModeEnabled": false,
   "ssoUserAgent": "SSO-service",
+  "masterPassword": "",
   "paths": {
     "tmp": "/tmp",
     "files": "/files"
@@ -12,43 +13,8 @@
   "urls": {
     "publicSmartlinkUrl": "https://{subDomain}.argoflow.io/{title}.sl?sl={smartlinkId}"
   },
-  "oldApi": {
-    "host": "<to be set in final config>",
-    "auth": "<to be set in final config>",
-    "entities": {
-      "asset": "asset",
-      "document": "content",
-      "smartlink": "document",
-      "folder": "folder",
-      "user": "member",
-      "organization": "organization",
-      "subscription": "subscription",
-      "util": "util"
-    },
-    "notifySmartlinkAfterAssetUpdate": false
-  },
-  "storageUsed": "OldApiStorage",
+  "storageUsed": "local",
   "storages": {
-    "OldApiStorage": {
-      "customOrgFolderOptionIsAvailable": false,
-      "folders": {
-        "asset": "aura",
-        "document": "pdf",
-        "documentPageImage": "page",
-        "userAvatar": "member",
-        "settingsFiles": "settings_files"
-      },
-      "paths": {
-        "publicAssetUrl": "<to be set in final config. E.g. http://api:3180/aura/media/{assetId}/{name}>",
-        "publicDocumentUrl": "<to be set in final config. E.g. http://conv:3380/{fileName}",
-        "publicDocumentPageImageUrl": "<to be set in final config. E.g. http://api:3180/page/{fileName}",
-        "publicDocumentPagePreviewImageUrl": "<to be set in final config. E.g. http://api:3180/page/{fileName}",
-        "publicSmartlinkCustomPreviewImageUrl": "<to be set in final config. E.g. http://api:3180/page/{fileName}",
-        "privateSmartlinkCustomPreviewImageUrl": "<to be set in final config. E.g. /page/{fileName}",
-        "publicUserAvatarUrl": "<to be set in final config. E.g. http://api:3180/files/member/{fileName}",
-        "settingsFileUrl": "<to be set in final config. E.g. http://api:3180/files/settings_files/{fileName}"
-      }
-    },
     "local": {
       "filesUrl": "<to be set in final config>",
       "rootFolder": "./storage/media",
@@ -149,37 +115,6 @@
     "url": "<to be set in final config>",
     "actionTopic": "wizeflow.actions",
     "errorTopic": "wizeflow.errors"
-  },
-  "bear": {
-    "urls": {
-      "deleteMarker": "<bear api url>/v2.13/pages/{markerId}?_token={token}",
-      "statusOfMarkers": "<bear api url>/v2.13/pages/statuses",
-      "books": "<bear api url>/v2.13/books",
-      "pages": "<bear api url>/v2.13/pages",
-      "booksLanguages": "<bear api url>/v2.13/campaigns_languages",
-      "media": "<bear api url>/{path}",
-      "webar": "<bear api url>/v2.13/webar/campaigns",
-      "assets": "<bear api url>/v2.13/assets",
-      "webarCheckUrl": "<bear api url>/v2.13/webar/campaigns/check_url",
-      "clients": "<bear api url>/v2.13/clients",
-      "clientFeatures": "<bear api url>/v2.13/client_features",
-      "clientConsumption": "<bear api url>/v2.13/stats/client_consumption",
-      "users": "<bear api url>/v2.13/users",
-      "userValidation": "<bear api url>/v2.13/users/validate",
-      "me": "<bear api url>/v2.13/users/me"
-    },
-    "clickhouse": {
-      "host": "<to be set in final config>",
-      "port": 8123,
-      "protocol": "http",
-      "database": "bapi",
-      "maxResultRows": 1000,
-      "maxResultMb": 10,
-      "maxMemoryUsageForUserMb": 100,
-      "maxExecutionTimeSec": 10
-    },
-    "token": "<to be set in final config>",
-    "notFoundErrorCode": 94
   },
   "googleAuth": {
     "urlToVerifyToken": "https://oauth2.googleapis.com/tokeninfo?id_token="
