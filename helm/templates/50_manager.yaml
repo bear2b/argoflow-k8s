@@ -12,7 +12,8 @@ data:
         "mediaLibUrl" : "medialib.ar-go.co",
         "shortlinksDisabled": true,
         "arDisabled": true,
-        "ssoEnabled": false,
+        "ssoEnabled": true,
+        "ssoUrl" : "{{ .Values.sso.host }}/api/v2",
         "readerTemplateVersion": "1.0"
     }
 
