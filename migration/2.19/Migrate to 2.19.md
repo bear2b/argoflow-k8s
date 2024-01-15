@@ -50,7 +50,7 @@ sso:
   host: <host of your sso service> # host of the service. E. g. k8s-sso.argoflow.io
   parameters:
     jwtSecret: <your jwt secret> # your own JWT secret. E. g. 8AAmJ6Xf+doM7ZLoYiME22M8z61Df/VuIN8zsAWO6rc=
-    masterPassword: <your master password> # the same master password as you specified previously in the Argoflow API config
+    masterPassword: <your master password> # the same master password as you specified previously in the Argoflow API config. But it should be a plain string here, NOT an MD5 hash
     mysqlLogin: root
     mysqlPassword: <mysql password> # set your own mysql password
     issuer: <your issuer host> # change to your own issuer host. E. g. k8s-sso.argoflow.io
