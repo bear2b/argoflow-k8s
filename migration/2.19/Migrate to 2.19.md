@@ -1,6 +1,6 @@
 To migrate from 2.18 to 2.19 you need to perform following steps:
 1. Create a service user in Argoflow API. User must be a superadmin and must never be deleted. 
-Please get user's token when he is created (don't forget to replace placeholders before):
+Please get user's token when it is created (don't forget to replace <argoflow api url>, <service user email> and <service user password> with appropriate values):
 ```bash
 curl -X 'POST' \
   '<argoflow api url>/auth' \
@@ -20,7 +20,7 @@ kubectl get secret af-api-secrets -o jsonpath="{.data.AF_API_CONFIG_B64}" -n arg
 - Add following keys at the end of the API `current.config.json`:
 ```json
   "ssoModeEnabled": true,
-  "masterPassword": "<your master password>" // Set your own master password. E. g. 8AAmJ6Xf+doM7ZLoYiME22M8z61Df/VuIN8zsAWO6rc=
+  "masterPassword": "<your master password>" // Set your own master password. It should be a MD5 hash. E. g. 1777120362afe842fd7456bbe128834b
 ```
 - Encode current.config.json to base64:
 ```bash
@@ -34,7 +34,7 @@ kubectl delete secret af-api-secrets -n argoflow
 ```
 - Do `helm upgrade`
 
-3. Please be sure that your updated your **helm/templates** folder with the following changes:
+3. Please be sure that you updated your **helm/templates** folder with the following changes:
 **00_secrets.yaml** - added a **sso-secret** config block
 **55_mysql.yaml** - new file, just put it to your **helm/templates** folder
 **60_sso.yaml** - new file, just put it to your **helm/templates** folder
@@ -43,7 +43,7 @@ kubectl delete secret af-api-secrets -n argoflow
 "ssoUrl" : "{{ .Values.sso.host }}/api/v2",
 ```
 
-4. Update you **values.*.yaml** file. Add the following values block to your file and set desired values (we commented values that should be changed necessarily):
+4. Update your **values.*.yaml** file. Add the following values block to your file and set desired values (we commented values that should be changed):
 ```yaml
 sso:
   replicaCount: 1
@@ -106,7 +106,7 @@ load('01_member_organization_created.js')
 exit
 ```
 
-10. Now we need synchonize Argoflow API users with SSO.
+10. Now you can synchronise Argoflow API users with SSO.
 Please run the following commands one by one (replace **<url of your sso service>** to your sso service url. E. g. **https://k8s-sso.argoflow.io**):
 ```bash
 token=$(curl -X 'POST' \
