@@ -2,6 +2,96 @@
 
 ---
 
+## [2.20](https://github.com/bear2b/argoflow-k8s/releases/tag/2.20)
+
+### Migration notes
+
+### API:
+#### Added
+- ISETO-163: Ignore invalid x-forwarded-proto
+- WAPI-875: Start and End date in project list
+- WAPI-852: Move WAPI to k8s
+- WAPI-860: Swagger update related to SSO mode - added a link to SSO swagger
+- WAPI-862: Put API url to the token's issuer ("iss") field
+- WAPI-861: Support authentication over SSO master token
+
+#### Fixed
+- WAPI-881: Incorrectly decoded name of the original file if it has any japanese characters
+- WAPI-850: Impossible to get token in SSO MODE
+- WAPI-847: Undocumented error for restricted calls in sso mode
+- WAPI-867: Wrong organization stats by folder
+- WAPI-868: Find the reason of memory leak
+- WAPI-595: Swagger :: Change type for POST project's __background_mode parameter to boolean
+
+#### Changed
+- WAPI-869: Use user's language_id for PDF project language_id
+
+### SSO:
+#### Added
+-
+
+#### Fixed
+-
+
+#### Changed
+-
+
+### Reader / Smartlink Creator:
+### Added
+- WAPI-800: Add url project settings in e-mail, in order to change preferences for project
+
+### Fixed
+- WAPI-858: placeholder instead of text in the password window
+- AM-1024: Fixed phone & email asset doesn't work on IOS Chrome browser
+
+### Changed
+
+
+### Manager:
+#### Added
+- AM-988: Added new user role Visitor
+- AM-960: Allowed upload glb file on creation of Bubble360 project
+- AM-997: added bubble creation from images
+- AM-1021: update and add description message for Bubble project creation
+- AM-991: Put a new parameter Embedded to the stats
+- AM-1030-2: Display project end publish date
+
+#### Fixed
+- AM-999: Fixed hidden mediaLib menu
+- ISETO AM-1003: fixed AR always enabled even if it doesn't exist in SSO products
+- AM-1002: Fixed left menu for users and visitors
+- AM-994: Filtered users by organization ID of user to delete
+- AM-1017-2: Fixed Medialib are not visible in Resources for PDF organizations
+- AM-1014: Fixed translations
+- AM-968: Fixed cannot delete parent organization from settings
+- AM-1018: Fixed visitor role - cannot see projects
+- AM-1019: Fixed newly created bubble have no web_ar_settings
+- AM-1027: Fixed bug "cannot create PDF organization as suborg - cannot choose plan"
+- AM-1037: Fixed default values are missed on organization creation
+
+#### Changed
+- AM-992: Stop calling WAPI with BAPI token in case WAPI token is missing from SSO
+- ISETO AM-1005: hide for ISETO organization form fields
+- ISETO AM-1007: hide mediaLib for ISETO
+- ISETO AM-1011: Disabled AR,STQR,FreePage options for ISETO organizations
+- AM-1028: Create API to update stats data of free pages
+
+### Editor:
+#### Added
+
+
+#### Fixed
+- AE-736-2: Hide marker when manipulate with BUBBLE 360 project
+- AE-759-2: Fixed play AR scene doesn't work on Safari
+- AE-764: Fixed cannot create scripts on large numbers of page
+- AE-761-2: Resized assets when copy/paste to another project
+- AE-720: Enable user have click twice to move asset
+
+#### Changed
+- AE-765: Enable mediaLibrary for everyone
+- AE-760: Switched BAPI calls to REST form
+
+
 ## [2.19](https://github.com/bear2b/argoflow-k8s/releases/tag/2.19)
 
 ### Migration notes

@@ -5,7 +5,7 @@ drop table __kafka__wizeflow_tracks;
 drop table tracks;
 */
 
-CREATE DATABASE IF NOT EXISTS wizeflow;
+CREATE DATABASE wizeflow;
 use wizeflow;
 
 
@@ -144,20 +144,22 @@ SET max_partitions_per_insert_block=1000;
 CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_organization_id_dt
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(organization_id,'00'),2) 
-ORDER BY (organization_id, date, visitor)
+ORDER BY (organization_id, date, visitor, folder_id)
 POPULATE
 AS 
 select ifNull(organization_id,'0000') organization_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 ifNull(visitor,'') visitor,
 countIfState(object='sl' and event='open') views,
 sumIfState(toInt32OrZero(data), object='page' and event='view') view_seconds,
 uniqExactIfState(fp, object='sl' and event='open') devices,
 countIfState(object='sl' and event='download_document') downloaded,
-countIfState(object='sl' and event='print') printed
+countIfState(object='sl' and event='print') printed,
+ifNull(dictGet('dict_smartlinks', '_folder', smartlink_id), '') folder_id
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and ((object='page' and event='view') or (object='sl' and event in ('open', 'download_document', 'print')))
-group by organization_id, toDate(dt), visitor;
+group by organization_id, date, visitor, folder_id;
+
 
 
 SET max_partitions_per_insert_block=1000;
@@ -171,12 +173,12 @@ select
 ifNull(organization_id,'0000') organization_id,
 ifNull(user_id,'0000') user_id,
 ifNull(smartlink_id,'0000') smartlink_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 ifNull(visitor,'') visitor,
 countState() views
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='sl' and event='open'
-group by organization_id, user_id, smartlink_id, toDate(dt), visitor;
+group by organization_id, user_id, smartlink_id, date, visitor;
 
 
 SET max_partitions_per_insert_block=1000;
@@ -187,7 +189,7 @@ ORDER BY (smartlink_id, date, visitor)
 POPULATE
 AS 
 select ifNull(smartlink_id,'0000') smartlink_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 countIfState(object='sl' and event='open') views,
 sumIfState(toInt32OrZero(data), object='page' and event='view') view_seconds,
 countIfState(object='sl' and event='open' and os_name IN ('android', 'ios', 'Android', 'iOS')) mobile_view,
@@ -198,7 +200,7 @@ countIfState(object='sl' and event='print') printed,
 ifNull(visitor,'') visitor
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and ((object='page' and event='view') or (object='sl' and event in ('open', 'download_document', 'print')))
-group by smartlink_id, toDate(dt), visitor;
+group by smartlink_id, date, visitor;
 
 
 SET max_partitions_per_insert_block=1000;
@@ -209,14 +211,14 @@ ORDER BY (smartlink_id, date, ifNull(page,0), visitor)
 POPULATE
 AS 
 select ifNull(smartlink_id,'0000') smartlink_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 countIfState(event='open') page_views,
 sumIfState(toInt32OrZero(data), event='view') page_view_seconds,
 page,
 ifNull(visitor,'') visitor
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='page' and event in ('view','open')
-group by smartlink_id, toDate(dt), page, visitor;
+group by smartlink_id, date, page, visitor;
 
 
 SET max_partitions_per_insert_block=1000;
@@ -244,7 +246,7 @@ ORDER BY (smartlink_id, date, fp)
 POPULATE
 AS 
 select ifNull(smartlink_id,'0000') smartlink_id,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 ifNull(fp, '') fp,
 substr( max(concat(toString(dt),visitor)), 20) visitor_name,
 any(email) email,
@@ -266,12 +268,12 @@ any(engine_version) engine_version,
 countIfState(object='sl' and event='open') views,
 countIfState(object='sl' and event='download_document') downloaded,
 countIfState(object='sl' and event='print') printed,
-uniqExact(page, object='page' and event='open') pages_viewed,
+uniqExactIfState(concat(smartlink_id,toString(page)), object='page' and event='open') pages_viewed,
 countIfState(object='page' and event='open') page_views,
 sumIfState(toInt32OrZero(data), object='page' and event='view') view_seconds
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and ((object='page' and event in ('view','open')) or (object='sl' and event in ('open','download_document','print')))
-group by smartlink_id, toDate(dt), fp;
+group by smartlink_id, date, fp;
 
 
 SET max_partitions_per_insert_block=1000;
@@ -285,27 +287,16 @@ select ifNull(smartlink_id,'0000') smartlink_id,
 ifNull(visitor, '') visitor,
 ifNull(asset_id,'') asset_id,
 ifNull(page,0) page,
-toDate(dt) date,
+toDate(date_add(minute,-ifNull(timezone,0),dt)) date,
 countIfState(object='asset' and event='click') clicked,
 countIfState(object='asset' and event='in') hovered
 from wizeflow.tracks
 where fp!='' and visitor!='anonymous' and object='asset' and event in ('click','in') and asset_id != '' and page > 0
-group by smartlink_id, visitor, page, asset_id, toDate(dt);
+group by smartlink_id, visitor, page, asset_id, date;
 
 
-CREATE DICTIONARY dict_smartlinks
-(
-    _id String IS_OBJECT_ID,
-    title String
-)
-PRIMARY KEY _id
-SOURCE(MONGODB(
-    host 'mongo-service'
-    port 27017
-    user ''
-    password ''
-    db 'creator'
-    collection 'documents'
-))
-LIFETIME(MIN 60 MAX 60)
+CREATE DICTIONARY wizeflow.dict_smartlinks (`_id` String IS_OBJECT_ID, `title` String) 
+PRIMARY KEY _id 
+SOURCE(MONGODB(HOST 'mongo-service' PORT 27017 USER '' PASSWORD '' DB 'creator' COLLECTION 'documents' OPTIONS 'connectTimeoutMS=10000')) 
+LIFETIME(MIN 60 MAX 60) 
 LAYOUT(COMPLEX_KEY_HASHED());
