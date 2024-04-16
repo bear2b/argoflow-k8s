@@ -28,13 +28,28 @@ volumeClaimTemplates:
 ```
 - Check the **40_stats.yaml** file in the /helm/template release folder to see how it should look finally. 
 
-2. Copy sql script from (clickhouse)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.20/clickhouse] folder to the clickhouse pod:
+2. Please do the following step in your **45_editor.yaml** file:
+- Change the value of the data.app-config.json property in the "editor-conf" ConfigMap, it should look like this:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: editor-conf
+  namespace: argoflow
+data:
+  app-config.json: |
+    {
+      "mediaLibEnabled": false
+    }
+```
+
+3. Copy sql script from (clickhouse)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.20/clickhouse] folder to the clickhouse pod:
 ```bash
 kubectl -it -n argoflow exec pod/<your clickhouse pod name> -- mkdir -p /argoflow
 kubectl cp -n argoflow migration/2.20/clickhouse/. <your clickhouse pod name>:/argoflow/.
 ```
 
-3. Go to Clickhouse pod and execute scripts from /clickhouse folder
+4. Go to Clickhouse pod and execute scripts from /clickhouse folder
 ```bash
 kubectl exec -it -n argoflow <your clickhouse pod name> -- bash
 cd /argoflow
@@ -42,20 +57,20 @@ clickhouse-client --multiquery < 00_dict_smartlinks.sql 2>&1 | tee -a 00_dict_sm
 clickhouse-client --multiquery < 01_tracks_view_by_organization_id_dt.sql 2>&1 | tee -a 01_tracks_view_by_organization_id_dt.txt
 ```
 
-4. Copy sql script from (mysql)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.20/mysql] folder to the mysql pod:
+5. Copy sql script from (mysql)[https://github.com/bear2b/argoflow-k8s/tree/master/migration/2.20/mysql] folder to the mysql pod:
 ```bash
 kubectl -it -n argoflow exec pod/<your mysql pod name> -- mkdir -p /argoflow
 kubectl cp -n argoflow migration/2.20/mysql/. <your mysql pod name>:/argoflow/.
 ```
 
-5. Go to Mysql pod and execute scripts from /mysql folder
+6. Go to Mysql pod and execute scripts from /mysql folder
 ```bash
 kubectl exec -it -n argoflow <your mysql pod name> -- bash
 cd /argoflow
 mysql -u root -p sso < 00_user_default_language.sql 2>&1 | tee -a 00_user_default_language.txt
 ```
 
-6. Do `helm upgrade`. If you got the following error:
+7. Do `helm upgrade`. If you got the following error:
 ```bash
 Error: UPGRADE FAILED: cannot patch "clickhouse-bulk" with kind StatefulSet: StatefulSet.apps "clickhouse-bulk" is invalid: spec: Forbidden: updates to statefulset spec for fields other than 'replicas', 'template', and 'updateStrategy' are forbidden.
 ```
