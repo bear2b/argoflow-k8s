@@ -1,0 +1,1 @@
+ALTER TABLE sso.users MODIFY `language_id` int(10) unsigned NOT NULL DEFAULT '2';

@@ -5,7 +5,9 @@ metadata:
   namespace: argoflow
 data:
   app-config.json: |
-    {}
+    {
+      "mediaLibEnabled": false
+    }
 
 ---
 apiVersion: apps/v1

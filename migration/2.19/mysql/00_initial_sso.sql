@@ -78,7 +78,7 @@ CREATE TABLE `applications_products` (
 
 LOCK TABLES `applications_products` WRITE;
 /*!40000 ALTER TABLE `applications_products` DISABLE KEYS */;
-INSERT INTO `applications_products` VALUES (3, 1, '', 1, '2023-01-01 00:00:00', NULL);
+INSERT INTO `applications_products` VALUES (3, 2, '', 1, '2023-01-01 00:00:00', NULL);
 /*!40000 ALTER TABLE `applications_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,7 +278,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'wapi','Argoflow API','{{AF_API_URL}}',1,'2021-01-01 00:00:00',NULL,'{{TOKEN}}','Augmented PDF');
+INSERT INTO `products` VALUES (2,'wapi','Argoflow API','{{AF_API_URL}}',1,'2021-01-01 00:00:00',NULL,'{{TOKEN}}','Augmented PDF');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 

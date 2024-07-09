@@ -348,7 +348,7 @@ CREATE TABLE `users` (
   `password` varchar(250) COLLATE utf8_unicode_ci NOT NULL COMMENT 'password hash',
   `first_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `language_id` int(10) unsigned NOT NULL DEFAULT '1',
+  `language_id` int(10) unsigned NOT NULL DEFAULT '2',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `if_mfa_enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'If Multi-factor authentication is enabled for a user',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',

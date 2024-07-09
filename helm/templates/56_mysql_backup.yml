@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mysql-backup
+  namespace: argoflow
+spec:
+  schedule: "0 2 * * *"
+  concurrencyPolicy: Forbid
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: mysql-backup
+            image: argoteam/mysql-backup-s3:1.1
+            env:
+              - name: MYSQL_HOST
+                value: {{ .Values.sso.parameters.mysql.host }}
+              - name: MYSQL_PORT
+                value: "{{ .Values.sso.parameters.mysql.port }}"
+              - name: MYSQL_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: sso-secret
+                    key: MYSQL_LOGIN
+              - name: MYSQL_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: sso-secret
+                    key: MYSQL_PASSWORD
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: aws-secret
+                    key: S3_ACCESS_KEY
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: aws-secret
+                    key: S3_SECRET_KEY
+              - name: BUCKET
+                value: backups.bear2b.com
+              - name: PATH
+                value: mysql_backups/argoflow-k8s-sso
