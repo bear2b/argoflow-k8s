@@ -1,6 +1,74 @@
 # Argoflow platform Change Log
 
 ---
+## [2.21](https://github.com/bear2b/argoflow-k8s/releases/tag/2.21)
+
+### Migration notes
+
+### API:
+#### Added
+- WAPI-894: Keep original file name for assets
+- WAPI-891: Ability to set the strategy on the fly
+- WAPI-888: Detail errors for background job results
+- WAPI-887: Visitor emails - list & filter
+#### Fixed
+- 
+#### Changed
+- WAPI-893: Don't check organization and user limits in SSO mode
+
+### SSO:
+#### Added
+- 
+#### Fixed
+- SSO-143: Allow apostrophe in emails
+- SSO-145: Fix token retrieval for WAPI in case of uppercased email 
+#### Changed
+-
+
+### Reader / Smartlink Creator:
+
+#### Added
+- WAPI-896: Embed the accessibility feature module to Reader
+- WAPI-894: Keep original file name for assets
+- WAPI-891: Ability to set the strategy on the fly
+#### Fixed
+- PIC-525-2: Remove default icon for transparent assets
+- AE-781: Fixed file asset do not work in embedded reader
+- WR-370: Fixed broken interaction engine
+#### Changed
+- PIC-424-2: Removed click effect on mouse hover if no asset interaction
+- WAPI-890: Allow download smartlink as HTML file if it is even disactivated
+- WR-366: Added new customizable template parameters
+- WR-369: Disabled accessability feature for mobile devices
+
+### Manager:
+#### Added
+- WB-468-3: Added stats by clicked 3D objects
+- ISETO-175: Added allowfullscreen to previews
+#### Changed
+- AM-1053: Assign new project created by superadmin to an admin of choosen organization
+- AM-1071: Don't use atob/btoa to encode/decode free page content
+- WR-366-2: Added new template customizable parameters
+#### Fixed
+- AM-963-2: Fixed can't click prev/next AR preview page
+- AM-1074: Fixed WebAR - page_id stay in webAR settings even after page deleted
+- AM-1075: Pagination do not work on Free page tab
+
+
+### Editor:
+#### Added
+- ISETO-175: Added allowfullscreen in preview mode
+#### Changed
+- PIC-522: Handle errors for readOnly accounts
+#### Fixed
+- AE-777-2: Fixed bug when asked to automatically populate assets into a new language
+- AE-780: Impossible to save the calques order
+- AE-780-2: Impossible to save the layers order
+- AE-757: Prevented saving the wrong IE schema
+- AE-768: Fixed distance between assets when copy AR scene
+- AE-714: Adjust text asset width
+- AE-784: The arrows to move assets are not working
+
 
 ## [2.20](https://github.com/bear2b/argoflow-k8s/releases/tag/2.20)
 
