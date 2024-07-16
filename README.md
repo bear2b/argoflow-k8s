@@ -61,6 +61,9 @@ kubectl exec -it mongo-0 -n argoflow -- mongorestore --archive=/tmp/initial.arch
 ```
 In the initial database you'll have a super admin: `initial-superadmin@argoflow.io` Password:`3NXEsMZCnhWSSt2aALny6jXh`
 
+**IMPORTANT!**
+Please change the initial super admin's password as soon as the stack is deployed. You could do this in the Manager or by the API.
+
 Don't forget to set your organisation subdomain for smartlinks. E.g. for `k8s-sl.your-domain.com` it should be:
 ```bash
 db.organization.updateOne({"_id" : ObjectId("60644de18da0a703e87b78b6")},{$set:{sub:"k8s-sl"}});
