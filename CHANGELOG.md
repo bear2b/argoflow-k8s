@@ -58,6 +58,7 @@
 ### Editor:
 #### Added
 - ISETO-175: Added allowfullscreen in preview mode
+- AE-786: Added possibility to duplicate the behaviors
 #### Changed
 - PIC-522: Handle errors for readOnly accounts
 #### Fixed
@@ -68,7 +69,8 @@
 - AE-768: Fixed distance between assets when copy AR scene
 - AE-714: Adjust text asset width
 - AE-784: The arrows to move assets are not working
-
+- AE-788: Fixed text assets are cropped
+- AE-787: Fixed default layer not created
 
 ## [2.20](https://github.com/bear2b/argoflow-k8s/releases/tag/2.20)
 
