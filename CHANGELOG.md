@@ -62,6 +62,7 @@
 #### Changed
 - PIC-522: Handle errors for readOnly accounts
 #### Fixed
+- AE-791: Added language code into layer name only if multilanguages project
 - AE-777-2: Fixed bug when asked to automatically populate assets into a new language
 - AE-780: Impossible to save the calques order
 - AE-780-2: Impossible to save the layers order
