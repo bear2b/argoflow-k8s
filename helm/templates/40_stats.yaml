@@ -83,7 +83,7 @@ spec:
     spec:
       containers:
       - name: clickhouse-proxy
-        image: argoteam/clickhouse-proxy:dev
+        image: argoteam/clickhouse-proxy:test
         resources:
           requests:
             cpu: 100m
@@ -94,8 +94,12 @@ spec:
         - name: udp
           containerPort: 8091
         env:
-        - name: CLICKHOUSE_INGESTOR
+        - name: CLICKHOUSE_INGESTOR__DISABLED
           value: "http://clickhouse-bulk-service:8124"
+        - name: CLICKHOUSE
+          value: "clickhouse-service:9000"
+        - name: LOG_LEVEL
+          value: "trace"
 
 ---
 apiVersion: v1
