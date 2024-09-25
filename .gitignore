@@ -7,3 +7,4 @@ aws/storage_installation_log.txt
 helm/tmp
 helm/values.development.yaml
 .DS_Store
+/tmp

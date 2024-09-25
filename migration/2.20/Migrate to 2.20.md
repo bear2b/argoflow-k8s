@@ -35,7 +35,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: editor-conf
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 data:
   app-config.json: |
     {

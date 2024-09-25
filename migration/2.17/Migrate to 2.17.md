@@ -10,7 +10,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: clickhouse-bulk
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   serviceName: clickhouse-bulk-service
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clickhouse-bulk-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: LoadBalancer
   selector:
@@ -63,7 +63,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clickhouse-proxy
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
@@ -95,7 +95,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clickhouse-proxy-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: LoadBalancer
   selector:

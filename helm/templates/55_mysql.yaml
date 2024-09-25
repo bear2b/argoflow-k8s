@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   serviceName: mysql-service
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
   selector:
@@ -61,7 +61,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-external
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
   annotations:
     # Add BAPI/WAPI Developers group
     service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: clickhouse-bulk
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   serviceName: clickhouse-bulk-service
@@ -54,7 +54,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clickhouse-bulk-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: LoadBalancer
   selector:
@@ -70,7 +70,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clickhouse-proxy
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
@@ -106,7 +106,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clickhouse-proxy-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: LoadBalancer
   selector:
@@ -120,12 +120,72 @@ spec:
       targetPort: 8091
 
 
+# disable logs
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clickhouse-configs
+  namespace: {{ .Values.namespace }}
+data:
+  disable_logs.xml: |
+    <clickhouse>
+        <logger>
+          <!-- Possible levels [1]:
+
+            - none (turns off logging)
+            - fatal
+            - critical
+            - error
+            - warning
+            - notice
+            - information
+            - debug
+            - trace
+            - test (not for production usage)
+
+              [1]: https://github.com/pocoproject/poco/blob/poco-1.9.4-release/Foundation/include/Poco/Logger.h#L105-L114
+          -->
+          <level>error</level>
+        </logger>
+        <query_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </query_log>
+        <trace_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </trace_log>
+        <query_thread_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </query_thread_log>
+        <query_views_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </query_views_log>
+        <part_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </part_log>
+        <metric_log>
+            <collect_interval_milliseconds>0</collect_interval_milliseconds>
+        </metric_log>
+        <asynchronous_metric_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </asynchronous_metric_log>
+        <opentelemetry_span_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </opentelemetry_span_log>
+        <processors_profile_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </processors_profile_log>
+        <asynchronous_insert_log>
+            <flush_interval_milliseconds>0</flush_interval_milliseconds>
+        </asynchronous_insert_log>
+    </clickhouse>
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: clickhouse
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   serviceName: clickhouse-service
@@ -137,16 +197,6 @@ spec:
       labels:
         component: clickhouse
     spec:
-    #   initContainers:
-    #   # To increase the ulimit
-    #   - name: increase-the-ulimit
-    #     image: busybox
-    #     command:
-    #     - sh
-    #     - -c
-    #     - ulimit -n 262144
-    #     securityContext:
-    #       privileged: true
       containers:
       - name: clickhouse
         image: clickhouse/clickhouse-server:23.7.4
@@ -156,7 +206,16 @@ spec:
         volumeMounts:
         - name: clickhouse-persistent-volume
           mountPath: /var/lib/clickhouse
-          subPath: clickhouse
+          # subPath: clickhouse
+        - name: clickhouse-configs-volume
+          mountPath: /etc/clickhouse/config.d
+      volumes:
+      - name: clickhouse-configs-volume
+        configMap:
+          name: clickhouse-configs
+          items:
+            - key: disable_logs.xml
+              path: disable_logs.xml
   volumeClaimTemplates:
   - metadata:
       name: clickhouse-persistent-volume
@@ -165,14 +224,78 @@ spec:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 512Gi
+          storage: 32Gi
+
+--- 
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clickhouse-backup
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "15 2 * * *"  # Runs every day at 2:15 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: clickhouse-backup
+            image: altinity/clickhouse-backup:latest
+            env:
+            - name: CLICKHOUSE_HOST
+              value: "clickhouse-service"
+            - name: CLICKHOUSE_PORT
+              value: "9000"
+            - name: CLICKHOUSE_PASSWORD
+              value: ""
+            - name: S3_BUCKET
+              value: "{{ .Values.clickhouseBackup.S3Bucket }}"
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: clickhouse-backup
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: clickhouse-backup
+                  key: S3_SECRET_KEY
+            - name: S3_REGION
+              value: "{{ .Values.clickhouseBackup.S3Region }}"
+            - name: S3_PATH
+              value: "{{ .Values.clickhouseBackup.S3Path }}"
+            - name: REMOTE_STORAGE
+              value: "{{ .Values.clickhouseBackup.RemoteStorage }}"
+            volumeMounts:
+            - name: clickhouse-persistent-volume
+              mountPath: /var/lib/clickhouse  # This is where ClickHouse data is stored
+            command:
+              - /bin/sh
+              - -c
+              - |
+                echo "Running backup..."
+                DAY=$(date +%d);
+                if [ $DAY = 01 ]
+                then
+                  BACKUP_NAME=backup_$(date -u +%Y-%m-%d)
+                else
+                  BACKUP_NAME=backup_daily
+                fi
+                clickhouse-backup create $BACKUP_NAME
+                echo "Backup completed."
+          restartPolicy: OnFailure  # Retries the job in case of failure
+          volumes:
+          - name: clickhouse-persistent-volume
+            persistentVolumeClaim:
+              claimName: clickhouse-persistent-volume-clickhouse-0
+      backoffLimit: 3  # Number of retries before marking the job as failed
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: clickhouse-service
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
   selector:

@@ -43,23 +43,41 @@ As soon as API config prepared, it should be converted to base64 string and save
 
 You also need to put appropriate information to `./heml/values.development.yaml` and/or `./heml/values.production.yaml`.
 
+
 ### Deploy Argoflow:
 ```bash
+kubectl create ns argoflow-k8s
+
 cd helm
-helm install -n argoflow -f values.development.yaml -f values.yaml argoflow .
+helm install -n argoflow-k8s -f values.development.yaml -f values.yaml argoflow-k8s .
 ```
 ### Update
 ```bash
 cd helm
-helm upgrade -n argoflow -f values.development.yaml -f values.yaml argoflow .
+helm upgrade -n argoflow-k8s -f values.development.yaml -f values.yaml argoflow-k8s .
 ```
 
 ### Create initial Mongo database
 ```bash
-kubectl cp -n argoflow ./initial/initial.archive mongo-0:/tmp
-kubectl exec -it mongo-0 -n argoflow -- mongorestore --archive=/tmp/initial.archive
+kubectl cp -n argoflow-k8s ./initial/mongo/initial.archive mongo-0:/tmp
+kubectl exec -it mongo-0 -n argoflow-k8s -- mongorestore --archive=/tmp/initial.archive
 ```
 In the initial database you'll have a super admin: `initial-superadmin@argoflow.io` Password:`3NXEsMZCnhWSSt2aALny6jXh`
+
+### Create initial mysql database
+```bash
+kubectl cp -n argoflow-k8s ./initial/mysql/sso.sql mysql-0:/tmp
+kubectl exec -it mysql-0 -n argoflow-k8s -- mysql --default-character-set utf8 -u root -p arcloudapi_db < tmp/sso.sql
+```
+In the initial database you'll have a super admin: `initial-superadmin@argoflow.io` Password:`3NXEsMZCnhWSSt2aALny6jXh`
+
+### Restore Clickhouse database
+```bash
+wget https://github.com/Altinity/clickhouse-backup/releases/download/v1.0.0/clickhouse-backup
+https://github.com/Altinity/clickhouse-backup/releases/download/v2.6.1/clickhouse-backup-2.6.1-1.x86_64.rpm
+chmod +x clickhouse-backup
+sudo mv clickhouse-backup /usr/local/bin/
+```
 
 **IMPORTANT!**
 Please change the initial super admin's password as soon as the stack is deployed. You could do this in the Manager or by the API.
@@ -70,9 +88,9 @@ db.organization.updateOne({"_id" : ObjectId("60644de18da0a703e87b78b6")},{$set:{
 ```
 ### Prepare Statistical stack
 ```bash
-kubectl exec -it pod/kafka-0 -n argoflow -- kafka-topics --zookeeper "zookeeper-service:2181" --topic wizeflow.tracks --create --partitions 10 --replication-factor 1 --config retention.bytes=10485760 retention.ms=86400000 cleanup.policy=delete
+kubectl exec -it pod/kafka-0 -n argoflow-k8s -- kafka-topics --zookeeper "zookeeper-service:2181" --topic wizeflow.tracks --create --partitions 10 --replication-factor 1 --config retention.bytes=10485760 retention.ms=86400000 cleanup.policy=delete
 
-kubectl exec -it pod/clickhouse-0 -n argoflow -- clickhouse-client -q "$(cat ../initial/clickhouse/initial.sql)" -n
+kubectl exec -it pod/clickhouse-0 -n argoflow-k8s -- clickhouse-client -q "$(cat ../initial/clickhouse/initial.sql)" -n
 ```
 
 # Argoflow Editor

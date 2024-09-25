@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sso
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.sso.replicaCount }}
   selector:
@@ -70,7 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sso
-  namespace: argoflow
+  namespace: {{ .Values.namespace }}
   annotations:
     # Add BAPI/WAPI Developers group
     service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'

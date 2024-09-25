@@ -20,7 +20,7 @@ spec:
   storageClassName: efs-sc
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: {{ .Values.storage.volumeHandle }}
+    volumeHandle: {{ .Values.storage.fileSystemId }}
 
 ---
 apiVersion: v1
