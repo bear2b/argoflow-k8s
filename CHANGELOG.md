@@ -1,6 +1,77 @@
 # Argoflow platform Change Log
 
 ---
+## [2.22](https://github.com/bear2b/argoflow-k8s/releases/tag/2.22)
+
+### Migration notes
+
+### API:
+#### Added
+- WAPI-910: Captions/descriptions for assets
+#### Fixed
+- 
+#### Changed
+- 
+
+### SSO:
+#### Added
+- SSO-149: AirTable integration
+#### Fixed
+- SSO-151: Mark organizations as deleted, not delete them from DB
+#### Changed
+- SSO-146: Correct errors
+
+### Reader / Smartlink Creator:
+#### Added
+- WAPI-909: Make Reader accessible
+#### Fixed
+- WAPI-912: You can see "augmentation layer" and "pdf layer" after enabling/disabling keyboard navigation and other fixes
+#### Changed
+- WAPI-907: Reduce RAM usage on encrypting embedded PDF
+
+### Manager:
+#### Added
+- 
+#### Changed
+- AM-1082-2: Filtered tags by type_id
+- AM-1083: Transleted SSO errors
+- AM-1038: Added new pages in background mode
+
+#### Fixed
+- AM-1080: Tags for Free Page projects requested from all organizations
+- AM-1081: Fixed got error "Inactive organisation" when open Stats with AR only organisation
+- AM-1044: Fixed request to argoflow tags is incorrect
+- AM-1059-2: Added missed dates when download stats as PDF
+- AM-1060-2: Fixed lost sl_sub_domain when edit pdf sub_org
+- AM-1043: Fixed language toggle in Account Settings do not change language_id
+- AM-1004-2: Add tooltip message for move to folder button
+- AM-1087-2: Fixed tables shrinked when download global stats as PDF
+- AM-881: Fixed image icons cropped on Stats block
+- AM-1090: Fixed Bubble project do not work without specific params
+- AM-1089: Fixed stats tables for Free pages is stretched
+
+### Editor:
+#### Added
+- ISETO-175: Added allowfullscreen in preview mode
+- AE-786: Added possibility to duplicate the behaviors
+- AE-770: Allow the fields Size and Position to calculate the value
+- AE-769: Added tool for spacing assets between them
+#### Changed
+- PIC-522: Handle errors for readOnly accounts
+#### Fixed
+- AE-777-2: Fixed bug when asked to automatically populate assets into a new language
+- AE-780: Impossible to save the calques order
+- AE-780-2: Impossible to save the layers order
+- AE-757: Prevented saving the wrong IE schema
+- AE-768: Fixed distance between assets when copy AR scene
+- AE-714: Adjust text asset width
+- AE-784: The arrows to move assets are not working
+- AE-788: Fixed text assets are cropped
+- AE-787-2: Fixed default layer not created
+- AE-791: Names for layers always contain language code, even for PDF
+- AE-795-2: Invalid IE object value with context variables
+
+
 ## [2.21](https://github.com/bear2b/argoflow-k8s/releases/tag/2.21)
 
 ### Migration notes

@@ -17,7 +17,7 @@ spec:
     metadata:
       labels:
         name: {{ .Values.sso.name }}
-        cluster: {{ .Values.labels.cluster }}
+        cluster: {{ .Values.cluster }}
       annotations:
         timestamp: "{{ date "20060102-150405" .Release.Time }}"
     spec:
@@ -62,6 +62,8 @@ spec:
           value: {{ .Values.sso.parameters.eventServer.host }}
         - name: SSO_GAR_ENABLED
           value: "{{ .Values.sso.parameters.gar.garEnabled }}"
+        - name: SSO_AIR_TABLE_ENABLED
+          value: "{{ .Values.sso.parameters.airTable.airTableEnabled }}"
       imagePullSecrets:
       - name: regcred
 

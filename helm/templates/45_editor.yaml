@@ -29,7 +29,7 @@ spec:
     metadata:
       labels:
         name: {{ .Values.editor.name }}
-        cluster: {{ .Values.labels.cluster }}
+        cluster: {{ .Values.cluster }}
       annotations:
         timestamp: "{{ date "20060102-150405" .Release.Time }}"
     spec:
