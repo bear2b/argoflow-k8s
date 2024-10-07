@@ -83,7 +83,7 @@ spec:
     spec:
       containers:
       - name: clickhouse-proxy
-        image: argoteam/clickhouse-proxy:test
+        image: argoteam/clickhouse-proxy:1.2
         resources:
           requests:
             cpu: 100m
