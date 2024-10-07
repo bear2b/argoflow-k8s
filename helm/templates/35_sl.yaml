@@ -17,7 +17,7 @@ spec:
     metadata:
       labels:
         name: {{ .Values.smartlinkCreator.name }}
-        cluster: {{ .Values.cluster }}
+        cluster: {{ .Values.labels.cluster }}
       annotations:
         timestamp: "{{ date "20060102-150405" .Release.Time }}"
     spec:
