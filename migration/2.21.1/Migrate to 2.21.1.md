@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: clickhouse-proxy
-        image: argoteam/clickhouse-proxy:1.2
+        image: argoteam/clickhouse-proxy:1.3
         resources:
           requests:
             cpu: 100m
@@ -43,7 +43,7 @@ spec:
 - Rename `CLICKHOUSE_INGESTOR` to `CLICKHOUSE_INGESTOR__DISABLED` in `helm/templates/40_stats.yaml` in `clickhouse-proxy` section. 
 Renaming this variable back to `CLICKHOUSE_INGESTOR` (and removing `CLICKHOUSE`) will let you switch back to clickhouse-bulk in case of any issues with new approach.
 
-- Change `image: argoteam/clickhouse-proxy:dev` to `image: argoteam/clickhouse-proxy:1.2` in `helm/templates/40_stats.yaml` in `clickhouse-proxy` section.
+- Change `image: argoteam/clickhouse-proxy:dev` to `image: argoteam/clickhouse-proxy:1.3` in `helm/templates/40_stats.yaml` in `clickhouse-proxy` section.
 
 - Do `helm upgrade`
 
