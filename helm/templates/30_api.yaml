@@ -49,15 +49,36 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: api-internal-service
   namespace: {{ .Values.namespace }}
-  annotations:
-    # Add BAPI/WAPI Developers group
-    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 80
+  - port: 8181
     targetPort: 80
   selector:
     name: {{ .Values.api.name }}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: api-internal-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.org/client-max-body-size: "100m"
+    nginx.ingress.kubernetes.io/enable-cors: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.api.host }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api-internal-service
+                port:
+                  number: 8181

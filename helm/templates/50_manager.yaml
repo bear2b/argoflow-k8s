@@ -63,13 +63,33 @@ kind: Service
 metadata:
   name: manager-service
   namespace: {{ .Values.namespace }}
-  annotations:
-    # Add BAPI/WAPI Developers group
-    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 80
+  - port: 8196
     targetPort: 80
   selector:
     name: {{ .Values.manager.name }}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: manager-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.org/client-max-body-size: "100m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.manager.host }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: manager-service
+                port:
+                  number: 8196
