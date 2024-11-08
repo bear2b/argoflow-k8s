@@ -1,7 +1,9 @@
 use wizeflow;
 
+DROP TABLE IF EXISTS wizeflow.tracks_view_by__organization_id__user_id__smarlink_id__visitor_emails;
+
 SET max_partitions_per_insert_block=1000;
-CREATE MATERIALIZED VIEW wizeflow.tracks_view_by__organization_id__user_id__smarlink_id__visitor_emails
+CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by__organization_id__user_id__smarlink_id__visitor_emails
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(organization_id,'00'),2) 
 ORDER BY (organization_id, user_id, smartlink_id, email)
@@ -17,10 +19,10 @@ where email != '' and fp!='' and visitor!='anonymous' and object='sl' and event=
 group by organization_id, user_id, smartlink_id, email;
 
 
-DROP TABLE wizeflow.tracks_view_by_smartlink_id__detail;
+DROP TABLE IF EXISTS wizeflow.tracks_view_by_smartlink_id__detail;
 
-SET max_partitions_per_insert_block=1000;
-CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_smartlink_id__detail
+SET max_partitions_per_insert_block=1000, max_memory_usage = 4000000000, max_memory_usage_for_user = 4000000000;
+CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_smartlink_id__detail
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(smartlink_id,'00'),2) 
 ORDER BY (smartlink_id, date, fp)
@@ -57,12 +59,10 @@ where fp!='' and visitor!='anonymous' and ((object='page' and event in ('view','
 group by smartlink_id, date, fp;
 
 
-
-DROP TABLE wizeflow.tracks_view_by_smartlink_id__assets;
+DROP TABLE IF EXISTS wizeflow.tracks_view_by_smartlink_id__assets;
 
 SET max_partitions_per_insert_block=1000;
-
-CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_smartlink_id__assets
+CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_smartlink_id__assets
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(smartlink_id,'00'),2) 
 ORDER BY (smartlink_id, visitor, email, page, asset_id, date)
@@ -82,8 +82,8 @@ group by smartlink_id, visitor, email, page, asset_id, date;
 
 
 DROP TABLE IF EXISTS wizeflow.tracks_view_by_smartlink_id_dt;
-SET max_partitions_per_insert_block=1000;
 
+SET max_partitions_per_insert_block=1000;
 CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_smartlink_id_dt
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(smartlink_id,'00'),2) 
@@ -106,10 +106,10 @@ where fp!='' and visitor!='anonymous' and ((object='page' and event='view') or (
 group by smartlink_id, date, visitor, email;
 
 
-DROP TABLE wizeflow.tracks_view_by_smartlink_id_page_dt;
+DROP TABLE IF EXISTS wizeflow.tracks_view_by_smartlink_id_page_dt;
 
 SET max_partitions_per_insert_block=1000;
-CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_smartlink_id_page_dt
+CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_smartlink_id_page_dt
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(smartlink_id,'00'),2) 
 ORDER BY (smartlink_id, date, ifNull(page,0), visitor, email)
@@ -127,10 +127,9 @@ where fp!='' and visitor!='anonymous' and object='page' and event in ('view','op
 group by smartlink_id, date, page, visitor, email;
 
 
-SET max_partitions_per_insert_block=1000;
-
 DROP TABLE IF EXISTS wizeflow.tracks_view_by_organization_id_dt;
 
+SET max_partitions_per_insert_block=1000;
 CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_organization_id_dt
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(organization_id,'00'),2) 
@@ -152,10 +151,10 @@ where fp!='' and visitor!='anonymous' and ((object='page' and event='view') or (
 group by organization_id, date, visitor, email, folder_id;
 
 
-DROP TABLE wizeflow.tracks_view_by_organization_id_smarlink_id_dt;
-SET max_partitions_per_insert_block=1000;
+DROP TABLE IF EXISTS wizeflow.tracks_view_by_organization_id_smarlink_id_dt;
 
-CREATE MATERIALIZED VIEW wizeflow.tracks_view_by_organization_id_smarlink_id_dt
+SET max_partitions_per_insert_block=1000;
+CREATE MATERIALIZED VIEW IF NOT EXISTS wizeflow.tracks_view_by_organization_id_smarlink_id_dt
 ENGINE = AggregatingMergeTree() 
 PARTITION BY left(ifNull(organization_id,'00'),2) 
 ORDER BY (organization_id, user_id, smartlink_id, date, visitor, email)
