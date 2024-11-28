@@ -9,7 +9,7 @@
 #### Added
 - WAPI-910: Captions/descriptions for assets
 #### Fixed
-- 
+- ISETO-178: Timezone fix
 #### Changed
 - 
 
@@ -23,6 +23,7 @@
 
 ### Reader / Smartlink Creator:
 #### Added
+- WAPI-913 Additional accessibility changes
 - WAPI-909: Make Reader accessible
 #### Fixed
 - WAPI-912: You can see "augmentation layer" and "pdf layer" after enabling/disabling keyboard navigation and other fixes
@@ -31,13 +32,24 @@
 
 ### Manager:
 #### Added
-- 
+- WB-468-3: Added stats by clicked 3D objects
+- ISETO-175: Added allowfullscreen to previews
+- AM-1059: Added possibility to export stats in pdf
+- AM-1094: Added possibility to set airtable account id of organization
 #### Changed
+- AM-1053: Assign new project created by superadmin to an admin of choosen organization
+- AM-1071: Don't use atob/btoa to encode/decode free page content
+- WR-366-2: Added new template customizable parameters
+- AM-1078: Removed webar parameters from shared link of bubble project
+- WAPI-871: A GET request instead of the POST one to start editor
 - AM-1082-2: Filtered tags by type_id
 - AM-1083: Transleted SSO errors
 - AM-1038: Added new pages in background mode
 
 #### Fixed
+- AM-963-2: Fixed can't click prev/next AR preview page
+- AM-1074: Fixed WebAR - page_id stay in webAR settings even after page deleted
+- AM-1075: Pagination do not work on Free page tab
 - AM-1080: Tags for Free Page projects requested from all organizations
 - AM-1081: Fixed got error "Inactive organisation" when open Stats with AR only organisation
 - AM-1044: Fixed request to argoflow tags is incorrect
@@ -49,6 +61,12 @@
 - AM-881: Fixed image icons cropped on Stats block
 - AM-1090: Fixed Bubble project do not work without specific params
 - AM-1089: Fixed stats tables for Free pages is stretched
+- AM-1097: [ISETO] Fixed got error when open Examples
+- AM-1098: [ISETO] Removed Keeex and IE options from organization creation modal
+- AM-1092: Fixed visual issue on global ar-stats
+- AM-880: Fixed projects not displayed for FP organisation only
+- AM-892: Fixed opening SL in Test modal logged in Stats and cause e-mail notification
+- AM-882: Removed error message when open templates
 
 ### Editor:
 #### Added

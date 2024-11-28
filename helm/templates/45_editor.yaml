@@ -66,7 +66,7 @@ spec:
   type: ClusterIP
   ports:
   - port: 8195
-    targetPort: 4445
+    targetPort: 80
   selector:
     name: {{ .Values.editor.name }}
 
