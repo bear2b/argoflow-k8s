@@ -88,6 +88,8 @@ spec:
           value: "{{ .Values.smartlinkCreator.parameters.showMobileWelcomePopup }}"
         - name: URL_TO_STATS
           value: "{{ .Values.smartlinkCreator.parameters.urlToStats }}"
+        - name: URL_TO_SETTINGS
+          value: "{{ .Values.smartlinkCreator.parameters.urlToSettings }}"
         - name: STORAGE_URL
           value: "{{ .Values.smartlinkCreator.parameters.storageUrl }}"
         - name: DEFAULT_LANGUAGE_ID
