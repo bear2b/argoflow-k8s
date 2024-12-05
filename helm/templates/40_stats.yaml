@@ -56,13 +56,12 @@ metadata:
   name: clickhouse-bulk-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
+  ports:
+  - port: 8124
+    targetPort: 8124
   selector:
     component: clickhouse-bulk
-  ports:
-    - name: tcp
-      port: 8124
-      targetPort: 8124
 
 
 ---
@@ -83,7 +82,7 @@ spec:
     spec:
       containers:
       - name: clickhouse-proxy
-        image: argoteam/clickhouse-proxy:1.4
+        image: argoteam/clickhouse-proxy:1.5
         resources:
           requests:
             cpu: 100m
@@ -108,16 +107,39 @@ metadata:
   name: clickhouse-proxy-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
+  ports:
+  - port: 8193
+    targetPort: 80
+    # we don't use udp port for now
+    # - port: 8194
+    #   targetPort: 8091
   selector:
     component: clickhouse-proxy
-  ports:
-    - name: tcp
-      port: 80
-      targetPort: 80
-    - name: udp
-      port: 8091
-      targetPort: 8091
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: clickhouse-proxy-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "1m"
+    nginx.org/client-max-body-size: "1m"
+    nginx.ingress.kubernetes.io/enable-cors: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.clickhouseProxy.host }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: clickhouse-proxy-service
+                port:
+                  number: 8193
 
 
 # disable logs

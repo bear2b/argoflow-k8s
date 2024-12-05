@@ -62,13 +62,33 @@ kind: Service
 metadata:
   name: editor-service
   namespace: {{ .Values.namespace }}
-  annotations:
-    # Add BAPI/WAPI Developers group
-    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 4445
+  - port: 8195
+    targetPort: 80
   selector:
     name: {{ .Values.editor.name }}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: editor-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.org/client-max-body-size: "100m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.editor.host }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: editor-service
+                port:
+                  number: 8195

@@ -46,27 +46,3 @@ spec:
   ports:
     - port: 27017
       targetPort: 27017
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo-compass
-  namespace: {{ .Values.namespace }}
-  annotations:
-    # Add BAPI/WAPI Developers group
-    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: '{{ .Values.common.extraSecurityGroup }}'
-spec:
-  type: LoadBalancer
-  selector:
-    component: mongo
-  ports:
-  - name: mongo
-    port: 27017
-    targetPort: 27017
-  - name: metrics
-    port: 9216
-    targetPort: 9216
-  # By default AWS ELB is open for ALL IPs (0.0.0.0/0)!!! So we use our VPC CIDR
-  loadBalancerSourceRanges:
-    - "{{ .Values.common.loadBalancerSourceRanges }}"
