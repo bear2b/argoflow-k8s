@@ -201,6 +201,19 @@ data:
             <flush_interval_milliseconds>0</flush_interval_milliseconds>
         </asynchronous_insert_log>
     </clickhouse>
+  backup_clickhouse.sh: |
+    #!/bin/sh
+    echo "Running backup..."
+    DAY=$(date +%d);
+    if [ $DAY = 01 ]
+    then
+      BACKUP_NAME=$(date -u +%Y-%m-%d)
+    else
+      BACKUP_NAME=daily
+    fi
+    echo "Create backup..."
+    clickhouse-backup create_remote $BACKUP_NAME
+    echo "Backup completed."
 
 ---
 apiVersion: apps/v1
@@ -228,9 +241,55 @@ spec:
         volumeMounts:
         - name: clickhouse-persistent-volume
           mountPath: /var/lib/clickhouse
-          # subPath: clickhouse
         - name: clickhouse-configs-volume
           mountPath: /etc/clickhouse/config.d
+
+      - name: clickhouse-backup
+        image: altinity/clickhouse-backup:latest
+        env:
+        - name: API_LISTEN
+          value: "0.0.0.0:7171"
+        - name: CLICKHOUSE_HOST
+          value: "127.0.0.1" # Localhost within the pod
+        - name: CLICKHOUSE_PORT
+          value: "9000"
+        - name: CLICKHOUSE_PASSWORD
+          value: "" # Add password if necessary
+        - name: S3_BUCKET
+          value: "{{ .Values.clickhouseBackup.S3Bucket }}"
+        - name: S3_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: clickhouse-backup
+              key: S3_ACCESS_KEY
+        - name: S3_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: clickhouse-backup
+              key: S3_SECRET_KEY
+        - name: S3_REGION
+          value: "{{ .Values.clickhouseBackup.S3Region }}"
+        - name: S3_PATH
+          value: "{{ .Values.clickhouseBackup.S3Path }}"
+        - name: REMOTE_STORAGE
+          value: "{{ .Values.clickhouseBackup.RemoteStorage }}"
+        volumeMounts:
+        - name: clickhouse-persistent-volume
+          mountPath: /var/lib/clickhouse
+        - name: clickhouse-backup-volume
+          mountPath: /data
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Starting clickhouse-backup sidecar...";
+          cp /data/backup_clickhouse.sh /etc/periodic/daily
+          chmod +x /etc/periodic/daily/backup_clickhouse.sh
+          crond -b -l 0
+          while true; do
+            sleep 86400; # Keeps the container running
+          done
+
       volumes:
       - name: clickhouse-configs-volume
         configMap:
@@ -238,6 +297,13 @@ spec:
           items:
             - key: disable_logs.xml
               path: disable_logs.xml
+      - name: clickhouse-backup-volume
+        configMap:
+          name: clickhouse-configs
+          items:
+            - key: backup_clickhouse.sh
+              path: backup_clickhouse.sh
+
   volumeClaimTemplates:
   - metadata:
       name: clickhouse-persistent-volume
@@ -247,70 +313,6 @@ spec:
       resources:
         requests:
           storage: 32Gi
-
---- 
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: clickhouse-backup
-  namespace: {{ .Values.namespace }}
-spec:
-  schedule: "15 2 * * *"  # Runs every day at 2:15 AM
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: clickhouse-backup
-            image: altinity/clickhouse-backup:latest
-            env:
-            - name: CLICKHOUSE_HOST
-              value: "clickhouse-service"
-            - name: CLICKHOUSE_PORT
-              value: "9000"
-            - name: CLICKHOUSE_PASSWORD
-              value: ""
-            - name: S3_BUCKET
-              value: "{{ .Values.clickhouseBackup.S3Bucket }}"
-            - name: S3_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: clickhouse-backup
-                  key: S3_ACCESS_KEY
-            - name: S3_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: clickhouse-backup
-                  key: S3_SECRET_KEY
-            - name: S3_REGION
-              value: "{{ .Values.clickhouseBackup.S3Region }}"
-            - name: S3_PATH
-              value: "{{ .Values.clickhouseBackup.S3Path }}"
-            - name: REMOTE_STORAGE
-              value: "{{ .Values.clickhouseBackup.RemoteStorage }}"
-            volumeMounts:
-            - name: clickhouse-persistent-volume
-              mountPath: /var/lib/clickhouse  # This is where ClickHouse data is stored
-            command:
-              - /bin/sh
-              - -c
-              - |
-                echo "Running backup..."
-                DAY=$(date +%d);
-                if [ $DAY = 01 ]
-                then
-                  BACKUP_NAME=backup_$(date -u +%Y-%m-%d)
-                else
-                  BACKUP_NAME=backup_daily
-                fi
-                clickhouse-backup create $BACKUP_NAME
-                echo "Backup completed."
-          restartPolicy: OnFailure  # Retries the job in case of failure
-          volumes:
-          - name: clickhouse-persistent-volume
-            persistentVolumeClaim:
-              claimName: clickhouse-persistent-volume-clickhouse-0
-      backoffLimit: 3  # Number of retries before marking the job as failed
 
 ---
 apiVersion: v1
