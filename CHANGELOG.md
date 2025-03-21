@@ -1,6 +1,76 @@
 # Argoflow platform Change Log
 
 ---
+## [2.23](https://github.com/bear2b/argoflow-k8s/releases/tag/2.23)
+
+### Migration notes
+
+### API:
+#### Added
+- WAPI-848: Migrate to AWS SDK for JavaScript (v3)
+#### Fixed
+- 
+#### Changed
+- WAPI-928: Tags from example projects should be ignored
+- WAPI-925: Optimize GET projects endpoint
+
+### SSO:
+#### Added
+- SSO-134: MFA - Send an email with MFA code valid for 30 minutes
+#### Fixed
+- SSO-126: updated_at is null for newly created org
+#### Changed
+- 
+
+### Reader / Smartlink Creator:
+#### Added
+- WAPI-913 Additional accessibility changes
+#### Fixed
+- ISETO-184: No styles in Smartlink in case of low connection speed
+- WAPI-922: Asset IN/OUT events can have wrong PAGENUMBER value
+- WAPI-918: Hidden assets have tabindex, assets placed out of page break text magnifier
+- AE-797: Fixed toollbar preview on editor playing scene
+#### Changed
+- WAPI-911: Additional HTML and accessibility improvements
+
+### Manager:
+#### Added
+
+#### Fixed
+- AM-1095: Fixed got error when choose quick project option on PDF projects
+- AM-1097: [ISETO] Fixed got errorwhen open Examples
+- AM-1098: [ISETO] Removed Keeex and IE options from organization creation modal 
+- AM-1076: free-page "Save" button become active after page refresh
+- AM-1099: Fixed embedded iframe doesn't work anymore
+- AM-1101: Fixed error in FP stats (not model viewer)
+- AM-1103: Fixed Published status of project
+- AM-1104-2: Fixed wrong message displayed after deleting a project
+- AM-1093-2: Fixed 3D Bubble project creation
+- AM-1085: Fixed cannot delete organization without bapi/wapi ids
+- AM-1105: Fixed cannot delete page from AR project
+- AM-1111-3: Fixed template preview
+#### Changed
+- 
+
+### Editor:
+#### Added
+- 
+#### Fixed
+- AE-796: Fixed assets dissapers when save pdf as HTML or JSON
+- AE-797: Fixed toolbar preview on playing scene
+- AE-728: Fixed Cut asset is deleted
+- AE-752: Removed errors when token expired 
+- ISETO-803: Fixed icons not visible
+- AE-809: Fixed scripts cannot open or delete except first one
+- WB-601: Fixed problem when import an image from public ressource in PICMedia
+- WB-602: PIC Added play button on video icon
+- AE-807: Removed useless bapi call
+- AE-811-2: Fixed asset icon preview
+- AE-812: PIC editor - Fixed error when use .mov video
+#### Changed
+- 
+
+
 ## [2.22](https://github.com/bear2b/argoflow-k8s/releases/tag/2.22)
 
 ### Migration notes
